@@ -7,6 +7,9 @@
     "skipLibCheck": true,
     "composite": true,
     "types": ["node"],
+    "paths": {
+      "component-ui": ["./lib/main.ts"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

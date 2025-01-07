@@ -10,8 +10,8 @@ export default defineConfig({
         // library entry and output settings
         lib: {
             entry: resolve(__dirname, "lib/main.ts"),
-            name: "components-ui",
-            fileName: "components-ui",
+            name: "component-ui",
+            fileName: "component-ui",
         },
         // bundler options
         // externalize react-related imports
@@ -26,10 +26,10 @@ export default defineConfig({
             },
         },
     },
-    // test: {
-    //   globals: true,
-    //   environment: "jsdom",
-    //   setupFiles: "./lib/test/setup.ts",
-    //   css: true,
-    // },
+    //   test: {
+    //     globals: true,
+    //     environment: "jsdom",
+    //     setupFiles: "./lib/test/setup.ts",
+    //     css: true,
+    //   },
 });

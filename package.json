@@ -6,8 +6,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/components-ui.umd.cjs",
-  "module": "./dist/components-ui",
+  "main": "./dist/component-ui.umd.cjs",
+  "module": "./dist/component-ui",
+  "exports": {
+    ".": {
+      "import": "./dist/component-ui.js",
+      "require": "./dist/component-ui.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -34,6 +40,7 @@
     "@storybook/react": "^8.4.7",
     "@storybook/react-vite": "^8.4.7",
     "@storybook/test": "^8.4.7",
+    "@types/node": "^22.10.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

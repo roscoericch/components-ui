@@ -17,13 +17,13 @@ export interface ButtonProps
   /** How large should the button be? */
   size?: "small" | "medium" | "large" | "icon";
   /** Button contents */
-  label: string;
+  label?: string;
   ghost?: boolean;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
 }
 
-const button = cva("button", {
+const buttonVariants = cva("button", {
   variants: {
     variant: {
       primary: "button--primary",
@@ -55,14 +55,14 @@ const button = cva("button", {
     {
       variant: "primary",
       ghost: true,
-      class: "button--outlined button--ghost",
+      class: "button--primary-ghost button--ghost",
     },
   ],
 });
 
 /** Primary UI component for user interaction */
 export const Button = ({
-  variant,
+  variant = "default",
   size,
   theme,
   ghost,
@@ -79,7 +79,7 @@ export const Button = ({
     <button
       {...props}
       className={clsx(
-        button({ variant, size, ghost, iconPosition }),
+        buttonVariants({ variant, size, ghost, iconPosition }),
         props.className
       )}
       style={{ ...style, ...props.style }}

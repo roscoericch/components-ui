@@ -1,41 +1,51 @@
 import React from "react";
 
 import "./input.css";
+import { cva } from "class-variance-authority";
+import clsx from "clsx";
 
-export interface InputProps {
-  /** Is this the principal call to action on the page? */
-  primary?: boolean;
-  /** What background color to use */
-  backgroundColor?: string;
-  /** How large should the button be? */
+export interface InputProps
+  extends Omit<
+    React.DetailedHTMLProps<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      HTMLInputElement
+    >,
+    "size"
+  > {
+  variant?: "outlined" | "filled" | "borderless";
   size?: "small" | "medium" | "large";
-  /** Button contents */
-  label: string;
-  /** Optional click handler */
-  onClick?: () => void;
+  theme?: string;
 }
 
+const inputVariants = cva("input", {
+  variants: {
+    variant: {
+      outlined: "input--outlined",
+      filled: "input--filled",
+      borderless: "button--borderless",
+    },
+    status: {
+      error: "input--error",
+    },
+    size: {
+      small: "input--small",
+      medium: "input--medium",
+      large: "input--large",
+    },
+  },
+  defaultVariants: {
+    variant: "outlined",
+    size: "medium",
+  },
+  compoundVariants: [],
+});
+
 /** Primary UI component for user interaction */
-export const Input = ({
-  primary = false,
-  size = "medium",
-  backgroundColor,
-  label,
-  ...props
-}: InputProps) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary";
+export const Input = ({ variant, size, ...props }: InputProps) => {
   return (
-    <button
-      type="button"
-      className={["storybook-button", `storybook-button--${size}`, mode].join(
-        " "
-      )}
-      style={{ backgroundColor }}
+    <input
       {...props}
-    >
-      {label}
-    </button>
+      className={clsx(inputVariants({ variant, size }), props.className)}
+    />
   );
 };
