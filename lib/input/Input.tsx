@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import "./input.css";
 import { lightVariation } from "../utils/theme";
+import HideIcon from "../assets/icons/HideIcon";
+import ShowIcon from "../assets/icons/ShowIcon";
 export interface InputProps
   extends Omit<
     React.DetailedHTMLProps<
@@ -84,4 +86,30 @@ export const Input = ({
   );
 };
 
+const Password = (props: InputProps) => {
+  const [show, setShow] = useState(false);
+  return (
+    <Input
+      {...props}
+      suffix={
+        show ? (
+          <ShowIcon
+            onClick={() => {
+              setShow(false);
+            }}
+          />
+        ) : (
+          <HideIcon
+            onClick={() => {
+              setShow(true);
+            }}
+          />
+        )
+      }
+      type={!show ? "password" : ""}
+    />
+  );
+};
+
+Input.Password = Password;
 export default Input;

@@ -1,4 +1,4 @@
-const ShowIcon = () => {
+const ShowIcon = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,8 @@ const ShowIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-6"
+      style={{ width: 14, height: 14, cursor: "pointer" }}
+      {...props}
     >
       <path
         strokeLinecap="round"

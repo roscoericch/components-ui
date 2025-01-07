@@ -9,13 +9,13 @@ function App() {
   return (
     <>
       <h1>Vite + React</h1>
-      <Input
+      <Input.Password
         size="small"
         variant="filled"
-        prefix={<User />}
+        // prefix={<User />}
         placeholder="Placeholder"
-        suffix={<User />}
-        disabled={true}
+        // suffix={<User />}
+        // disabled={true}
       />
       <div className="card">
         <Button
