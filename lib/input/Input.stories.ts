@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-import { Input } from "./Input";
+import Input from "./Input";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -25,15 +25,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Outlined: Story = {
+export const Basic: Story = {
   args: {
     variant: "outlined",
-  },
-};
-
-export const Filled: Story = {
-  args: {
-    variant: "filled",
+    placeholder: "Basic",
+    disabled: false,
   },
 };
 

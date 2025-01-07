@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Button } from "../lib/main";
+import { Button, Input } from "../lib/main";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,6 +8,7 @@ function App() {
   return (
     <>
       <h1>Vite + React</h1>
+      <Input placeholder="Placeholder" />
       <div className="card">
         <Button
           variant="primary"
