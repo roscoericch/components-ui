@@ -6,6 +6,9 @@
   font-weight: 700;
   line-height: 1;
   font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .button:disabled {
   cursor: not-allowed;
@@ -64,15 +67,29 @@
   padding: 10px 16px;
   font-size: 12px;
 }
+
 .button--medium {
   padding: 11px 20px;
   font-size: 14px;
 }
+
 .button--large {
   padding: 12px 24px;
   font-size: 16px;
 }
 
+.button--icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
 .button--ghost {
   background-color: transparent !important;
+}
+
+.button--icon--right {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 10px;
 }
