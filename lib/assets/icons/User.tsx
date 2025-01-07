@@ -5,8 +5,9 @@ const User = () => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
-      className="size-6"
+      stroke="#000"
+      className=""
+      style={{ width: 12, height: 12 }}
     >
       <path
         strokeLinecap="round"

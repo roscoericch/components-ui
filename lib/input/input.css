@@ -7,6 +7,7 @@
   border-radius: 6px;
   width: "100%";
   outline: none;
+  display: inline-flex;
   transition: border-color 0.3s, box-shadow 0.3s;
   color: rgba(0, 0, 0, 0.88);
   font-size: 14px;
@@ -15,7 +16,9 @@
 .input::placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
-.input:disabled {
+.input:disabled,
+.input--container-disabled,
+.input--inline:disabled {
   cursor: not-allowed;
   background-color: rgba(0, 0, 0, 0.04);
   color: rgba(0, 0, 0, 0.02);
@@ -53,9 +56,14 @@
   box-shadow: 0 0 2px var(--input-theme-light, #1ea7fd);
 }
 
-.input--borderless {
+.input--borderless,
+.input--borderless:not(:disabled):hover,
+.input--borderless:not(:disabled):focus:hover,
+.input--borderless:not(:disabled):focus {
   border-color: transparent;
   background-color: white;
+  outline: none;
+  color: rgba(0, 0, 0, 0.88);
 }
 
 .input--container {
@@ -63,6 +71,9 @@
   margin: 0;
   padding: 0;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
 }
 .input--container:not(:disabled):hover {
   border-color: var(--input-theme, #1ea7fd);
@@ -70,6 +81,23 @@
 .input--container:not(:disabled):focus {
   border-color: var(--input-theme, #1ea7fd);
   box-shadow: var(--input-theme-dark, #1b84c5);
+}
+.input--inline,
+.input--inline:not(:disabled):hover,
+.input--inline:not(:disabled):focus:hover,
+.input--inline:not(:disabled):focus {
+  border-color: transparent;
+  background-color: transparent;
+  outline: none;
+  color: rgba(0, 0, 0, 0.88);
+  display: inline-flex;
+  width: 100%;
+}
+.input--inline:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.02);
+  border-color: transparent;
 }
 
 .input--small {

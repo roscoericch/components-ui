@@ -3,7 +3,6 @@ import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import "./input.css";
 import { lightVariation } from "../utils/theme";
-import User from "../assets/icons/User";
 export interface InputProps
   extends Omit<
     React.DetailedHTMLProps<
@@ -61,7 +60,11 @@ export const Input = ({
       {prefix || suffix ? (
         <span
           style={{ ...style }}
-          className={clsx("input--container", inputVariants({ variant, size }))}
+          className={clsx(
+            "input--container",
+            inputVariants({ variant, size }),
+            { "input--container-disabled": props.disabled }
+          )}
         >
           <span className="input--prefix">{prefix}</span>
           <input

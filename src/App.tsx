@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Button, Input } from "../lib/main";
+import User from "../lib/assets/icons/User";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,7 +9,14 @@ function App() {
   return (
     <>
       <h1>Vite + React</h1>
-      <Input placeholder="Placeholder" />
+      <Input
+        size="small"
+        variant="filled"
+        prefix={<User />}
+        placeholder="Placeholder"
+        suffix={<User />}
+        disabled={true}
+      />
       <div className="card">
         <Button
           variant="primary"
