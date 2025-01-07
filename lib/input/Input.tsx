@@ -86,7 +86,7 @@ export const Input = ({
   );
 };
 
-const Password = (props: InputProps) => {
+export const Password = (props: InputProps) => {
   const [show, setShow] = useState(false);
   return (
     <Input

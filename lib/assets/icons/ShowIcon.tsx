@@ -6,7 +6,13 @@ const ShowIcon = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      style={{ width: 14, height: 14, cursor: "pointer" }}
+      style={{
+        width: 14,
+        height: 14,
+        cursor: "pointer",
+        display: "inline-block",
+        margin: "auto",
+      }}
       {...props}
     >
       <path
