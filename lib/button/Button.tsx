@@ -23,7 +23,7 @@ export interface ButtonProps
   iconPosition?: "left" | "right";
 }
 
-const buttonVariants = cva("button base-style", {
+const buttonVariants = cva("button component-ui-style", {
   variants: {
     variant: {
       primary: "button--primary",

@@ -20,7 +20,7 @@ export interface InputProps
   suffix?: React.ReactNode;
 }
 
-const inputVariants = cva("input base-style", {
+const inputVariants = cva("input component-ui-style", {
   variants: {
     variant: {
       outlined: "input--outlined",

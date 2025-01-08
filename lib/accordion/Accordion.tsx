@@ -19,7 +19,7 @@ export interface AccordionProps {
   ghost?: boolean;
 }
 
-const accordionVariants = cva("accordion base-style", {
+const accordionVariants = cva("accordion component-ui-style", {
   variants: {
     size: {
       small: "accordion--small",
