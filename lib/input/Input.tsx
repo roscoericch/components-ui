@@ -68,6 +68,7 @@ export const Input = ({
             { "input--container-disabled": props.disabled }
           )}
           role="input"
+          aria-disabled={props.disabled}
         >
           <span className="input--prefix">{prefix}</span>
           <input

@@ -21,7 +21,7 @@
 .input--inline:disabled {
   cursor: not-allowed;
   background-color: rgba(0, 0, 0, 0.04);
-  color: rgba(0, 0, 0, 0.02);
+  color: rgba(0, 0, 0, 0.4);
   border: 1px solid #d9d9d9;
 }
 .input:disabled::placeholder {
@@ -32,7 +32,7 @@
   border-color: transparent;
   background-color: rgba(0, 0, 0, 0.04);
 }
-.input--filled:not(:disabled):hover {
+.input--filled:not(:disabled):not([aria-disabled="true"]):hover {
   border-color: var(--input-theme-light-fade, #1ea7fd);
   background-color: rgba(0, 0, 0, 0.06);
 }
@@ -47,7 +47,7 @@
   border-color: #d9d9d9;
   background-color: white;
 }
-.input--outlined:not(:disabled):hover {
+.input--outlined:not(:disabled):not([aria-disabled="true"]):hover {
   border-color: var(--input-theme-light-fade, #1ea7fd);
 }
 .input--outlined:not(:disabled):focus:hover,
@@ -57,7 +57,7 @@
 }
 
 .input--borderless,
-.input--borderless:not(:disabled):hover,
+.input--borderless:not(:disabled):not([aria-disabled="true"]):hover,
 .input--borderless:not(:disabled):focus:hover,
 .input--borderless:not(:disabled):focus {
   border-color: transparent;
@@ -75,7 +75,7 @@
   justify-content: space-between;
   gap: 5px;
 }
-.input--container:not(:disabled):hover {
+.input--container:not([aria-disabled="true"]):hover {
   border-color: var(--input-theme, #1ea7fd);
 }
 .input--container:not(:disabled):focus {
@@ -96,7 +96,7 @@
 .input--inline:disabled {
   cursor: not-allowed;
   background-color: transparent;
-  color: rgba(0, 0, 0, 0.02);
+  color: rgba(0, 0, 0, 0.4);
   border-color: transparent;
 }
 .input--suffix,
