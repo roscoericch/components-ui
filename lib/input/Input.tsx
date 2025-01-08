@@ -20,7 +20,7 @@ export interface InputProps
   suffix?: React.ReactNode;
 }
 
-const inputVariants = cva("input", {
+const inputVariants = cva("input base-style", {
   variants: {
     variant: {
       outlined: "input--outlined",
@@ -67,6 +67,7 @@ export const Input = ({
             inputVariants({ variant, size }),
             { "input--container-disabled": props.disabled }
           )}
+          role="input"
         >
           <span className="input--prefix">{prefix}</span>
           <input

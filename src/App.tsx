@@ -1,18 +1,54 @@
 import { useState } from "react";
 import "./App.css";
-import { Button, Input } from "../lib/main";
+import { Button, Input, Accordion } from "../lib/main";
 import User from "../lib/assets/icons/User";
 
+const items = [
+  {
+    title: "Section 1",
+    content: (
+      <p>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </p>
+    ),
+    key: "1",
+  },
+  {
+    title: "Section 2",
+    content: (
+      <p>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </p>
+    ),
+    key: "2",
+  },
+  {
+    title: "Section 3",
+    content: (
+      <p>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </p>
+    ),
+    key: "3",
+  },
+];
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
       <h1>Vite + React</h1>
+      <Accordion items={items} />
       <Input.Password
         size="small"
         variant="filled"
-        // prefix={<User />}
+        prefix={<User />}
         placeholder="Placeholder"
         // suffix={<User />}
         // disabled={true}

@@ -1,0 +1,73 @@
+.accordion {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion--small .accordion--title {
+  padding: 6px 14px;
+}
+
+.accordion--medium .accordion--title {
+  padding: 10px 14px;
+}
+
+.accordion--large .accordion--title {
+  padding: 12px 14px;
+}
+
+.accordion--title {
+  width: 100%;
+  background: #f7f7f7;
+  text-align: left;
+  font-weight: medium;
+  border: none;
+  cursor: pointer;
+  color: rgb(18, 17, 17);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.accordion--title-content {
+  width: 92%;
+  display: inline;
+}
+
+/* .accordion-title:hover {
+  background: #eaeaea;
+} */
+
+.accordion--content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.accordion--content.accordion--open {
+  max-height: 100%; /* Adjust according to expected content size */
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  padding: 1% 2%;
+  text-align: left;
+}
+
+.accordion--chevron {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion--chevron-open {
+  transform: rotate(90deg);
+}
