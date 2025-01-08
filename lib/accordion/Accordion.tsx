@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./accordion.css";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
@@ -50,7 +50,6 @@ export const Accordion: React.FC<AccordionProps> = ({
   iconPosition = "start",
 }) => {
   const [openIndexes, setOpenIndexes] = useState<string[]>([]);
-  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const toggleIndex = (index: string) => {
     setOpenIndexes((prevIndexes) => {
@@ -64,11 +63,6 @@ export const Accordion: React.FC<AccordionProps> = ({
         return prevIndexes.includes(index) ? [] : [index];
       }
     });
-  };
-
-  const getMaxHeight = (index: number) => {
-    const content = contentRefs.current[index];
-    return content ? `${content.scrollHeight}px` : "0px";
   };
 
   return (
@@ -98,21 +92,9 @@ export const Accordion: React.FC<AccordionProps> = ({
             )}
           </div>
           <div
-            ref={(el) => (contentRefs.current[index] = el)}
             className={clsx("accordion--content", {
               "accordion--open": openIndexes.includes(item.key),
             })}
-            style={{
-              maxHeight: openIndexes.includes(item.key)
-                ? getMaxHeight(index)
-                : "0px",
-              opacity: openIndexes.includes(item.key) ? 1 : 0,
-              transform: openIndexes.includes(item.key)
-                ? "scaleY(1)"
-                : "scaleY(0.95)",
-              transition:
-                "max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, transform 0.4s ease",
-            }}
           >
             {item.content}
           </div>
