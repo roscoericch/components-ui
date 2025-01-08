@@ -70,12 +70,16 @@ export const Input = ({
           role="input"
           aria-disabled={props.disabled}
         >
-          <span className="input--prefix">{prefix}</span>
+          <span aria-disabled={props.disabled} className="input--prefix">
+            {prefix}
+          </span>
           <input
             {...props}
             className={clsx("input--inline", props.className)}
           />
-          <span className="input--suffix">{suffix}</span>
+          <span aria-disabled={props.disabled} className="input--suffix">
+            {suffix}
+          </span>
         </span>
       ) : (
         <input
@@ -96,15 +100,23 @@ export const Password = (props: InputProps) => {
       suffix={
         show ? (
           <ShowIcon
+            role="button"
+            aria-disabled={props.disabled}
             onClick={() => {
+              if (props.disabled) return;
               setShow(false);
             }}
+            stroke={props.disabled ? "#3f3c3c" : "#000"}
           />
         ) : (
           <HideIcon
+            role="button"
+            aria-disabled={props.disabled}
             onClick={() => {
+              if (props.disabled) return;
               setShow(true);
             }}
+            stroke={props.disabled ? "#3f3c3c" : "#000"}
           />
         )
       }

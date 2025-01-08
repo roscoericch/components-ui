@@ -5,13 +5,10 @@ const ShowIcon = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="#000"
+      stroke={props.stroke ?? "#000"}
       style={{
         width: 14,
         height: 14,
-        cursor: "pointer",
-        display: "inline-block",
-        margin: "auto",
       }}
       {...props}
     >

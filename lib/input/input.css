@@ -104,6 +104,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+.input--suffix[aria-disabled="true"],
+.input--prefix[aria-disabled="true"] {
+  cursor: not-allowed;
 }
 
 .input--small {
