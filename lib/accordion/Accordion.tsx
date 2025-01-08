@@ -10,7 +10,7 @@ interface AccordionItem {
   key: string;
 }
 
-interface AccordionProps {
+export interface AccordionProps {
   items: AccordionItem[];
   allowMultiple?: boolean;
   size?: "small" | "medium" | "large";
@@ -41,14 +41,14 @@ const accordionVariants = cva("accordion base-style", {
   compoundVariants: [],
 });
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion = ({
   items,
   allowMultiple = false,
   size,
   borderless,
   ghost,
   iconPosition = "start",
-}) => {
+}: AccordionProps) => {
   const [openIndexes, setOpenIndexes] = useState<string[]>([]);
 
   const toggleIndex = (index: string) => {
@@ -103,5 +103,46 @@ export const Accordion: React.FC<AccordionProps> = ({
     </div>
   );
 };
+
+const items = [
+  {
+    title: "Section 1",
+    content: (
+      <span>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </span>
+    ),
+    key: "1",
+  },
+  {
+    title: "Section 2",
+    content: (
+      <p>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </p>
+    ),
+    key: "2",
+  },
+  {
+    title: "Section 3",
+    content: (
+      <p>
+        A dog is a type of domesticated animal.Known for its loyalty and
+        faithfulness,it can be found as a welcome guest in many households
+        across the world.
+      </p>
+    ),
+    key: "3",
+  },
+];
+
+const Test = (props: Omit<AccordionProps, "items">) => {
+  return <Accordion {...props} items={items} />;
+};
+Accordion.Test = Test;
 
 export default Accordion;
