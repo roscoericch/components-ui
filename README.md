@@ -4,7 +4,7 @@
 
 A brief description of what the component library does and its purpose.
 
-## To define the component library base style for common global styles e.g font-family... as required by your use case
+## To configure the component library base style for common global styles e.g font-family... as required by your use case
 
 ```css
 .component-ui-style {
