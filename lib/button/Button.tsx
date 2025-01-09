@@ -78,7 +78,9 @@ export const Button = ({
       {loading && (
         <Spin
           {...spinProps}
-          color={props.disabled ? "rgba(0, 0, 0, 0.25)" : spinProps?.color}
+          color={
+            props.disabled ? "rgba(0, 0, 0, 0.25)" : spinProps?.color ?? "#FFF"
+          }
         />
       )}
       <span>{props.children || props.label}</span>

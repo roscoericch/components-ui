@@ -1,9 +1,10 @@
 .spin {
-  border: 2px solid var(--spin-theme-color, white); /* Outer color */
-  border-top-color: transparent; /* Make the top part transparent for the spinning effect */
+  border: 2px solid var(--spin-theme-color, #1ea7fd);
+  border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   background-color: transparent;
+  display: inline-block;
 }
 
 .spin--small {
