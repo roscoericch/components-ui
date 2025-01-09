@@ -47,6 +47,10 @@ const convertToRgb = (color: string) => {
   return hexToRgb(color);
 };
 
+export const setTheme = (theme?: string) => {
+  return theme ?? "#1ea7fd";
+};
+
 // Helper function to lighten a color by a factor
 export const lightVariation = (color = "#1ea7fd", factor: number) => {
   let [r, g, b] = convertToRgb(color)

@@ -1,0 +1,31 @@
+.spin {
+  border: 2px solid var(--spin-theme-color, white); /* Outer color */
+  border-top-color: transparent; /* Make the top part transparent for the spinning effect */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  background-color: transparent;
+}
+
+.spin--small {
+  width: 12px;
+  height: 12px;
+}
+
+.spin--medium {
+  width: 16px;
+  height: 16px;
+}
+
+.spin--large {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

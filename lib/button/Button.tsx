@@ -4,6 +4,8 @@ import clsx from "clsx";
 
 import "./button.css";
 import { lightVariation } from "../utils/theme";
+import Spin from "../spin/Spin";
+import { SpinProps } from "../spin/types";
 
 export interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -21,6 +23,8 @@ export interface ButtonProps
   ghost?: boolean;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
+  spinProps?: SpinProps;
+  loading?: boolean;
 }
 
 const buttonVariants = cva("button component-ui-style", {
@@ -46,6 +50,10 @@ const buttonVariants = cva("button component-ui-style", {
       left: null,
       right: "button--icon--right",
     },
+    loading: {
+      true: "button--loading",
+      false: null,
+    },
   },
   defaultVariants: {
     variant: "default",
@@ -68,6 +76,8 @@ export const Button = ({
   ghost,
   icon,
   iconPosition,
+  loading,
+  spinProps,
   ...props
 }: ButtonProps) => {
   const style = {
@@ -79,13 +89,19 @@ export const Button = ({
     <button
       {...props}
       className={clsx(
-        buttonVariants({ variant, size, ghost, iconPosition }),
+        buttonVariants({ variant, size, ghost, iconPosition, loading }),
         props.className
       )}
       style={{ ...style, ...props.style }}
     >
       {icon}
-      <span>{props.label || props.children}</span>
+      {loading && (
+        <Spin
+          {...spinProps}
+          color={props.disabled ? "rgba(0, 0, 0, 0.25)" : spinProps?.color}
+        />
+      )}
+      <span>{props.children || props.label}</span>
     </button>
   );
 };

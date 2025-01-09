@@ -64,9 +64,10 @@ function App() {
           count is {count}
         </Button>
         <Button
-          variant="outlined"
+          variant="primary"
           theme="#df0909"
           onClick={() => setCount((count) => count + 1)}
+          loading={true}
         >
           count is {count}
         </Button>

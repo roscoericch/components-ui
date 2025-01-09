@@ -52,6 +52,16 @@ export const Outlined: Story = {
   },
 };
 
+export const Loading: Story = {
+  args: {
+    label: "Button",
+    variant: "primary",
+    disabled: false,
+    ghost: false,
+    loading: true,
+  },
+};
+
 export const Large: Story = {
   args: {
     size: "large",
