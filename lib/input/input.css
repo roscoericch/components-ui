@@ -4,7 +4,7 @@
   padding: 4px 11px;
   border-width: 1px;
   border-style: solid;
-  border-radius: 6px;
+  border-radius: 4px;
   width: "100%";
   outline: none;
   display: inline-flex;
@@ -112,11 +112,11 @@
 }
 
 .input--small {
-  padding: 2px 8px;
+  padding: 2px 10px;
 }
 .input--medium {
-  padding: 4px 11px;
+  padding: 6px 15px;
 }
 .input--large {
-  padding: 6px 15px;
+  padding: 8px 15px;
 }

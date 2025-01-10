@@ -18,7 +18,7 @@ const meta = {
     theme: { control: "color" },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { onClick: fn() },
+  args: { onClick: fn(), destructive: false },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -47,6 +47,15 @@ export const Outlined: Story = {
   args: {
     label: "Button",
     variant: "outlined",
+    disabled: false,
+    ghost: false,
+  },
+};
+
+export const Destructive: Story = {
+  args: {
+    label: "Button",
+    variant: "primary",
     disabled: false,
     ghost: false,
   },

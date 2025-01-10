@@ -58,12 +58,19 @@ export const Button = ({
   iconPosition,
   loading,
   spinProps,
+  destructive,
   ...props
 }: ButtonProps) => {
   const style = {
-    [`--button-${variant}-color`]: theme,
-    [`--button-${variant}-color-light`]: lightVariation(theme, 0.6),
-    [`--button-${variant}-color-light-fade`]: lightVariation(theme, 0.3),
+    [`--button-${variant}-color`]: destructive ? "#ff4d4f" : theme,
+    [`--button-${variant}-color-light`]: lightVariation(
+      destructive ? "#ff4d4f" : theme,
+      0.6
+    ),
+    [`--button-${variant}-color-light-fade`]: lightVariation(
+      destructive ? "#ff4d4f" : theme,
+      0.3
+    ),
   } as React.CSSProperties;
   return (
     <button

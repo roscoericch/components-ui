@@ -18,4 +18,5 @@ export interface ButtonProps
   iconPosition?: "left" | "right";
   spinProps?: SpinProps;
   loading?: boolean;
+  destructive?: boolean;
 }
