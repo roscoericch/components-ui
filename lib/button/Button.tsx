@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import clsx from "clsx";
 
 import "./button.css";
-import { lightVariation } from "../utils/theme";
+import { darkVariation, lightVariation } from "../utils/theme";
 import Spin from "../spin/Spin";
 import { ButtonProps } from "./types";
 
@@ -68,6 +68,10 @@ export const Button = ({
       0.6
     ),
     [`--button-${variant}-color-light-fade`]: lightVariation(
+      destructive ? "#ff4d4f" : theme,
+      0.3
+    ),
+    [`--button-${variant}-color-dark`]: darkVariation(
       destructive ? "#ff4d4f" : theme,
       0.3
     ),
