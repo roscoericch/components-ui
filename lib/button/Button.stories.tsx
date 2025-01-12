@@ -21,7 +21,13 @@ const meta = {
     icon: { control: false },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { onClick: fn(), destructive: false, loading: false, ghost: false },
+  args: {
+    onClick: fn(),
+    destructive: false,
+    loading: false,
+    ghost: false,
+    children: "Button",
+  },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -31,7 +37,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     variant: "primary",
-    label: "Button",
     disabled: false,
     ghost: false,
   },
@@ -39,7 +44,6 @@ export const Primary: Story = {
 
 export const Default: Story = {
   args: {
-    label: "Button",
     variant: "default",
     disabled: false,
     ghost: false,
@@ -48,7 +52,6 @@ export const Default: Story = {
 
 export const Outlined: Story = {
   args: {
-    label: "Button",
     variant: "outlined",
     disabled: false,
     ghost: false,
@@ -57,7 +60,6 @@ export const Outlined: Story = {
 
 export const Destructive: Story = {
   args: {
-    label: "Button",
     variant: "primary",
     disabled: false,
     ghost: false,
@@ -68,13 +70,12 @@ export const Icon: Story = {
   args: {
     variant: "primary",
     icon: <User strokeWidth={3} stroke="#FFF" />,
-    label: "Button",
+    children: "",
   },
 };
 
 export const Loading: Story = {
   args: {
-    label: "Button",
     variant: "primary",
     disabled: false,
     ghost: false,
@@ -85,13 +86,11 @@ export const Loading: Story = {
 export const Large: Story = {
   args: {
     size: "large",
-    label: "Button",
   },
 };
 
 export const Small: Story = {
   args: {
     size: "small",
-    label: "Button",
   },
 };

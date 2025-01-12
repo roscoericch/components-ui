@@ -6,10 +6,10 @@ export interface itemProps {
 export interface DropdownProps {
   options: itemProps[];
   open?: boolean;
-  className?: string; // Custom class for the dropdown
+  classes?: { trigger: string; popup: string }; // Custom class for the dropdown
   style?: React.CSSProperties; // Custom styles
   children: React.ReactElement;
-  onDropdownClick: (item: itemProps) => void;
-  onOpenChange: (nexOpen: boolean) => void;
+  onDropdownClick?: (item: itemProps) => void;
+  onOpenChange?: (nexOpen: boolean) => void;
   trigger?: ("hover" | "click")[];
 }

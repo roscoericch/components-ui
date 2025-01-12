@@ -12,11 +12,11 @@ export interface ButtonProps
   /** How large should the button be? */
   size?: "small" | "medium" | "large" | "icon";
   /** Button contents */
-  label?: string;
   ghost?: boolean;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   spinProps?: SpinProps;
   loading?: boolean;
   destructive?: boolean;
+  asChild?: boolean;
 }

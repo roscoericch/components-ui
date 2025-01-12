@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import { Button, Input, Accordion } from "../lib/main";
+import { Button, Input, Accordion, Dropdown } from "../lib/main";
 import User from "../lib/assets/icons/User";
+import { itemProps } from "../lib/dropdown/types";
 
 const items = [
   {
@@ -38,6 +39,20 @@ const items = [
     key: "3",
   },
 ];
+const dropdown_items: itemProps[] = [
+  {
+    label: <span>A cat</span>,
+    key: "1",
+  },
+  {
+    label: <p>A dog</p>,
+    key: "2",
+  },
+  {
+    label: <p>A spoon</p>,
+    key: "3",
+  },
+];
 function App() {
   const [count, setCount] = useState(0);
 
@@ -57,20 +72,23 @@ function App() {
         <Button
           variant="primary"
           theme="#df0909"
-          ghost
+          // ghost
           onClick={() => setCount((count) => count + 1)}
-          disabled
+          // disabled
+          asChild
         >
-          count is {count}
+          <a href="#">count is {count}</a>
         </Button>
-        <Button
-          variant="primary"
-          theme="#df0909"
-          onClick={() => setCount((count) => count + 1)}
-          loading={true}
-        >
-          count is {count}
-        </Button>
+        <Dropdown trigger={["hover"]} options={dropdown_items}>
+          <Button
+            variant="primary"
+            theme="#df0909"
+            onClick={() => setCount((count) => count + 1)}
+            loading={true}
+          >
+            count is {count}
+          </Button>
+        </Dropdown>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

@@ -2,18 +2,18 @@ import { useState, useRef, useEffect, useCallback } from "react";
 
 import "./dropdown.css";
 import Comp from "../shared/Comp";
-import { cva } from "class-variance-authority";
 import { DropdownProps, itemProps } from "./types";
+import clsx from "clsx";
 
 export function Dropdown({
   options,
-  className,
+  classes,
   style,
   children,
   open,
   trigger = ["hover"],
-  onDropdownClick,
-  onOpenChange,
+  onDropdownClick = () => {},
+  onOpenChange = () => {},
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(open);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -43,30 +43,32 @@ export function Dropdown({
   }, []);
 
   return (
-    <div className={`dropdown ${className || ""}`} style={style}>
+    <div className={`dropdown--container`} style={style}>
       <Comp
         role="button"
-        className="dropdown-toggle"
+        className={clsx(`dropdown--toggle`, classes?.trigger)}
         onClick={trigger.includes("click") ? toggleDropdown : () => {}}
         onMouseEnter={trigger.includes("hover") ? toggleDropdown : () => {}}
         onMouseLeave={trigger.includes("hover") ? toggleDropdown : () => {}}
       >
         {children}
       </Comp>
-      <div className={`dropdown ${className || ""}`} style={style}>
-        {isOpen && (
-          <ul className="dropdown-menu">
-            {options.map((option, index) => (
-              <li
-                key={index}
-                className={`dropdown-item`}
-                onClick={() => handleSelect(option)}
-              >
-                {option.label}
-              </li>
-            ))}
-          </ul>
-        )}
+      <div
+        ref={dropdownRef}
+        className={clsx(`dropdown--menu`, classes?.popup, { open: isOpen })}
+        style={style}
+      >
+        <ul className="dropdown--menu-list">
+          {options.map((option, index) => (
+            <li
+              key={index}
+              className={`dropdown--item`}
+              onClick={() => handleSelect(option)}
+            >
+              {option.label}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
