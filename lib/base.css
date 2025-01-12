@@ -1,3 +1,8 @@
+:root {
+  --color-primary: #1ea7fd;
+  --color-danger: #ff4d4f;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

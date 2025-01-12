@@ -6,7 +6,7 @@ const User = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="#000"
-      style={{ width: 12, height: 12 }}
+      style={{ width: "12px", height: "12px" }}
       {...props}
     >
       <path

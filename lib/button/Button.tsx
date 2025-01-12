@@ -26,10 +26,6 @@ const buttonVariants = cva("button component-ui-style", {
       true: "button--ghost",
       false: null,
     },
-    iconPosition: {
-      left: null,
-      right: "button--icon--right",
-    },
     loading: {
       true: "button--loading",
       false: null,
@@ -80,12 +76,11 @@ export const Button = ({
     <button
       {...props}
       className={clsx(
-        buttonVariants({ variant, size, ghost, iconPosition, loading }),
+        buttonVariants({ variant, size, ghost, loading }),
         props.className
       )}
       style={{ ...style, ...props.style }}
     >
-      {icon}
       {loading && (
         <Spin
           {...spinProps}
@@ -94,7 +89,11 @@ export const Button = ({
           }
         />
       )}
-      <span>{props.children || props.label}</span>
+      {iconPosition === "left" && icon}
+      {(props.children || props.label) && (
+        <span>{props.children || props.label}</span>
+      )}
+      {iconPosition === "right" && icon}
     </button>
   );
 };

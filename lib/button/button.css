@@ -109,8 +109,9 @@
 }
 
 .button--icon {
-  height: 2rem;
-  width: 2rem;
+  /* height: 2rem;
+  width: 2rem; */
+  padding: 10px;
   font-size: 16px;
 }
 
