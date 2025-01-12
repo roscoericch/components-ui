@@ -1,4 +1,4 @@
-const User = () => {
+const User = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,8 +6,8 @@ const User = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="#000"
-      className=""
       style={{ width: 12, height: 12 }}
+      {...props}
     >
       <path
         strokeLinecap="round"

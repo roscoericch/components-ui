@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
 import { Button } from "./Button";
+import User from "../assets/icons/User";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -16,9 +17,11 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     theme: { control: "color" },
+    spinProps: { control: false },
+    icon: { control: false },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { onClick: fn(), destructive: false },
+  args: { onClick: fn(), destructive: false, loading: false, ghost: false },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -58,6 +61,14 @@ export const Destructive: Story = {
     variant: "primary",
     disabled: false,
     ghost: false,
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    variant: "primary",
+    icon: <User strokeWidth={3} stroke="#FFF" />,
+    label: "Button",
   },
 };
 
