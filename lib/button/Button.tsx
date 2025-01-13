@@ -31,6 +31,10 @@ const buttonVariants = cva("button component-ui-style", {
       true: "button--loading",
       false: null,
     },
+    disabled: {
+      true: "button--disabled",
+      false: null,
+    },
   },
   defaultVariants: {
     variant: "default",
@@ -53,55 +57,46 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
-    variant = "default",
-    size,
-    theme,
-    ghost,
-    icon,
-    iconPosition,
-    loading,
-    spinProps,
-    destructive,
-    asChild,
-    disabled,
-    ...props
-  }) => {
+  ({ ...props }) => {
     const style = {
-      [`--button-${variant}-color`]: destructive ? "#ff4d4f" : theme,
-      [`--button-${variant}-color-light`]: lightVariation(
-        destructive ? "#ff4d4f" : theme,
+      [`--button-${props.variant}-color`]: props.destructive
+        ? "#ff4d4f"
+        : props.theme,
+      [`--button-${props.variant}-color-light`]: lightVariation(
+        props.destructive ? "#ff4d4f" : props.theme,
         0.6
       ),
-      [`--button-${variant}-color-light-fade`]: lightVariation(
-        destructive ? "#ff4d4f" : theme,
+      [`--button-${props.variant}-color-light-fade`]: lightVariation(
+        props.destructive ? "#ff4d4f" : props.theme,
         0.3
       ),
-      [`--button-${variant}-color-dark`]: darkVariation(
-        destructive ? "#ff4d4f" : theme,
+      [`--button-${props.variant}-color-dark`]: darkVariation(
+        props.destructive ? "#ff4d4f" : props.theme,
         0.3
       ),
     } as React.CSSProperties;
-    const Component = asChild ? Comp : "button";
+    const Component = props.asChild ? Comp : "button";
 
     const content = (
       <>
         {/* Predefined Children */}
-        {loading && (
+        {props.loading && (
           <Spin
-            {...spinProps}
+            {...props.spinProps}
             color={
-              disabled ? "rgba(0, 0, 0, 0.25)" : spinProps?.color ?? "#FFF"
+              props.disabled
+                ? "rgba(0, 0, 0, 0.25)"
+                : props.spinProps?.color ?? "#FFF"
             }
           />
         )}
-        {iconPosition === "left" && icon}
+        {props.iconPosition === "left" && props.icon}
         {extractElementsFromNode(props.children)}
-        {iconPosition === "right" && icon}
+        {props.iconPosition === "right" && props.icon}
       </>
     );
 
-    if (asChild) {
+    if (props.asChild) {
       if (React.isValidElement(props.children)) {
         return cloneElement(
           props.children,
@@ -109,7 +104,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             ...props.children.props,
             ...props,
             className: clsx(
-              buttonVariants({ variant, size, ghost, loading }),
+              buttonVariants({
+                variant: props.variant,
+                size: props.size,
+                ghost: props.ghost,
+                loading: props.loading,
+                disabled: props.disabled,
+              }),
               props.children.props.className,
               props.className
             ),
@@ -124,7 +125,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <Component
         {...props}
         className={clsx(
-          buttonVariants({ variant, size, ghost, loading }),
+          buttonVariants({
+            variant: props.variant,
+            size: props.size,
+            ghost: props.ghost,
+            loading: props.loading,
+            disabled: props.disabled,
+          }),
           props.className
         )}
         style={style}

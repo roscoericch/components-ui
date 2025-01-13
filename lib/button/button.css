@@ -10,11 +10,12 @@
   gap: 10px;
   touch-action: manipulation;
 }
-.button:disabled {
+.button:disabled,
+.button--disabled {
   cursor: not-allowed;
   box-shadow: none;
-  background-color: transparent;
-  color: rgba(0, 0, 0, 0.25);
+  background-color: rgb(250, 250, 250, 0.7);
+  color: rgba(59, 58, 58, 0.25);
   border: 1px solid #d9d9d9;
 }
 
@@ -31,12 +32,12 @@
   background-color: var(--button-primary-color-light, #1ea7fd);
   color: white;
 }
-.button--primary:not(:disabled):focus-visible {
+.button--primary:not(:disabled):not(.button--disabled):focus-visible {
   outline: 3px solid var(--button-primary-color-light-fade, #3cacf1);
   outline-offset: 1px;
   transition: outline-offset 0.5s, outline 0.5s;
 }
-.button--primary:not(:disabled):active {
+.button--primary:not(:disabled):not(.button--disabled):active {
   background: var(--button-primary-color-dark, #09507d);
   color: #fff;
 }
@@ -63,33 +64,36 @@
   color: var(--button-outlined-color, #1ea7fd);
   background-color: white;
 }
-.button--outlined:not(:disabled):hover {
+.button--outlined:not(:disabled):not(.button--disabled):hover {
   border: 1px solid var(--button-outlined-color-light, #1ea7fd);
   color: var(--button-outlined-color-light, #1ea7fd);
 }
-.button--outlined:not(:disabled):focus-visible {
+.button--outlined:not(:disabled):not(.button--disabled):focus-visible {
   outline: 3px solid var(--button-outlined-color-light-fade, #3cacf1);
   outline-offset: 1px;
   transition: outline-offset 0.5s, outline 0.5s;
 }
-.button--outlined:not(:disabled):active {
+.button--outlined:not(:disabled):not(.button--disabled):active {
   border: 1px solid var(--button-outlined-color-dark, #09507d);
   color: var(--button-outlined-color-dark, #09507d);
 }
 
 .button--text {
   background-color: transparent;
+}
+.button--text:not(:disabled):not(.button--disabled) {
   color: var(--button-text-color, #1ea7fd);
 }
-.button--text:not(:disabled):hover {
+.button--text:not(:disabled):not(.button--disabled):hover {
   background-color: var(--button-text-color-light-fade, #1ea7fd);
+  /* color: rgb(250, 250, 250, 0.7); */
 }
 
 .button--link {
   background-color: transparent;
   color: var(--button-link-color, #1ea7fd);
 }
-.button--link:not(:disabled):hover {
+.button--link:not(:disabled):not(.button--disabled):hover {
   color: var(--button-link-color-light, #1ea7fd);
 }
 

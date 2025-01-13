@@ -41,18 +41,18 @@ const items = [
 ];
 const dropdown_items: itemProps[] = [
   {
-    label: <span>A cat</span>,
+    label: <span>cat item (disabled)</span>,
     key: "1",
     icon: <User />,
     disabled: true,
   },
   {
-    label: <p>A dog</p>,
+    label: <p>dog item (danger)</p>,
     key: "2",
     destructive: true,
   },
   {
-    label: <p>A spoon</p>,
+    label: <p style={{ color: "blue" }}>spoon item</p>,
     key: "3",
   },
 ];
@@ -73,12 +73,12 @@ function App() {
       />
       <div className="card">
         <Button
-          variant="primary"
+          variant="text"
           theme="#df0909"
           // ghost
           onClick={() => setCount((count) => count + 1)}
-          // disabled
-          asChild
+          disabled
+          // asChild
         >
           <a href="#">
             <span>
@@ -86,7 +86,7 @@ function App() {
             </span>
           </a>
         </Button>
-        <Dropdown trigger={["click"]} options={dropdown_items}>
+        <Dropdown trigger={["hover"]} options={dropdown_items}>
           <Button
             variant="primary"
             theme="#df0909"

@@ -13,7 +13,7 @@
   min-width: 200px;
   z-index: 1000;
   opacity: 0;
-  transform: scale(0.95);
+  transform: scale(0.1);
   transform-origin: top;
   transition: opacity 0.3s ease, transform 0.3s ease;
   border-radius: 6px;
@@ -21,6 +21,7 @@
 
 .dropdown--menu.open {
   opacity: 1;
+  scale: 1;
   transform: scale(1);
 }
 
@@ -35,8 +36,8 @@
 
 .dropdown--menu li {
   padding: 12px;
-  cursor: pointer;
   width: 100%;
+  border-color: transparent;
 }
 
 .dropdown--menu li:hover {
@@ -47,4 +48,8 @@
   text-align: center;
   justify-content: flex-start;
   font-size: 12px;
+}
+
+.dropdown--menu .dropdown--item-disabled {
+  color: "#ccc";
 }

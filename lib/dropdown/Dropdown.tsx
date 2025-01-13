@@ -4,7 +4,14 @@ import "./dropdown.css";
 import Comp from "../shared/Comp";
 import { DropdownProps, itemProps } from "./types";
 import clsx from "clsx";
+import { cva } from "class-variance-authority";
 import { Button } from "component-ui";
+
+const itemVariation = cva("dropdown--item", {
+  variants: {
+    disabled: { true: "dropdown--item-disabled", false: null },
+  },
+});
 
 export function Dropdown({
   options,
@@ -47,11 +54,11 @@ export function Dropdown({
     <div
       ref={dropdownRef}
       className={`dropdown--container`}
-      onMouseEnter={
-        trigger.includes("hover") ? () => setIsOpen(true) : () => {}
-      }
       onMouseLeave={
         trigger.includes("hover") ? () => setIsOpen(false) : () => {}
+      }
+      onMouseEnter={
+        trigger.includes("hover") ? () => setIsOpen(true) : () => {}
       }
       style={style}
     >
@@ -69,10 +76,12 @@ export function Dropdown({
         <ul className="dropdown--menu-list">
           {options.map((option, index) => (
             <Button
-              onClick={() => handleSelect(option)}
+              onClick={() => {
+                if (!option.disabled) handleSelect(option);
+              }}
               asChild
               key={index}
-              variant="text"
+              variant={"text"}
               theme="#2d2c2c"
               className="dropdown--menu-button"
               size="large"
@@ -80,7 +89,9 @@ export function Dropdown({
               disabled={option.disabled}
               icon={option.icon}
             >
-              <li className={`dropdown--item`}>{option.label}</li>
+              <li className={itemVariation({ disabled: option.disabled })}>
+                {option.label}
+              </li>
             </Button>
           ))}
         </ul>
