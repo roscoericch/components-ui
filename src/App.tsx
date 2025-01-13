@@ -43,10 +43,13 @@ const dropdown_items: itemProps[] = [
   {
     label: <span>A cat</span>,
     key: "1",
+    icon: <User />,
+    disabled: true,
   },
   {
     label: <p>A dog</p>,
     key: "2",
+    destructive: true,
   },
   {
     label: <p>A spoon</p>,
@@ -83,12 +86,12 @@ function App() {
             </span>
           </a>
         </Button>
-        <Dropdown trigger={["hover"]} options={dropdown_items}>
+        <Dropdown trigger={["click"]} options={dropdown_items}>
           <Button
             variant="primary"
             theme="#df0909"
             onClick={() => setCount((count) => count + 1)}
-            loading={true}
+            // loading={true}
           >
             count is {count}
           </Button>

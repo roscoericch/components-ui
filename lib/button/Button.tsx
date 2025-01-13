@@ -122,12 +122,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
     return (
       <Component
+        {...props}
         className={clsx(
           buttonVariants({ variant, size, ghost, loading }),
           props.className
         )}
         style={style}
-        {...props}
       >
         {content}
       </Component>

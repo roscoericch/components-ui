@@ -44,18 +44,25 @@ export function Dropdown({
   }, []);
 
   return (
-    <div className={`dropdown--container`} style={style}>
+    <div
+      ref={dropdownRef}
+      className={`dropdown--container`}
+      onMouseEnter={
+        trigger.includes("hover") ? () => setIsOpen(true) : () => {}
+      }
+      onMouseLeave={
+        trigger.includes("hover") ? () => setIsOpen(false) : () => {}
+      }
+      style={style}
+    >
       <Comp
         role="button"
         className={clsx(`dropdown--toggle`, classes?.trigger)}
         onClick={trigger.includes("click") ? toggleDropdown : () => {}}
-        onMouseEnter={trigger.includes("hover") ? toggleDropdown : () => {}}
-        onMouseLeave={trigger.includes("hover") ? toggleDropdown : () => {}}
       >
         {children}
       </Comp>
       <div
-        ref={dropdownRef}
         className={clsx(`dropdown--menu`, classes?.popup, { open: isOpen })}
         style={style}
       >
@@ -65,8 +72,13 @@ export function Dropdown({
               onClick={() => handleSelect(option)}
               asChild
               key={index}
-              size="small"
               variant="text"
+              theme="#2d2c2c"
+              className="dropdown--menu-button"
+              size="large"
+              destructive={option.destructive}
+              disabled={option.disabled}
+              icon={option.icon}
             >
               <li className={`dropdown--item`}>{option.label}</li>
             </Button>

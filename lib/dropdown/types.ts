@@ -1,6 +1,9 @@
 export interface itemProps {
   label: React.ReactNode;
   key: string;
+  disabled?: boolean;
+  destructive?: boolean;
+  icon?: React.ReactNode;
 }
 
 export interface DropdownProps {
