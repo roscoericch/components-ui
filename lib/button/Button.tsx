@@ -57,7 +57,7 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ ...props }) => {
+  ({ ...props }, forwardedRef) => {
     const style = {
       [`--button-${props.variant}-color`]: props.destructive
         ? "#ff4d4f"
@@ -115,6 +115,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               props.className
             ),
             style: { ...props.children.props.style, ...style },
+            ref: forwardedRef,
           },
           content
         );
@@ -135,6 +136,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           props.className
         )}
         style={style}
+        ref={forwardedRef}
       >
         {content}
       </Component>

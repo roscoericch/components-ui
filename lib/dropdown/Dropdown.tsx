@@ -65,7 +65,10 @@ export function Dropdown({
       <Comp
         role="button"
         className={clsx(`dropdown--toggle`, classes?.trigger)}
-        onClick={trigger.includes("click") ? toggleDropdown : () => {}}
+        onClick={(e) => {
+          children.props.onClick(e);
+          trigger.includes("click") ? toggleDropdown : () => {};
+        }}
       >
         {children}
       </Comp>

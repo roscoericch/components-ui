@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Button, Input, Accordion, Dropdown } from "../lib/main";
+import { Button, Input, Accordion, Dropdown, Label } from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
 
@@ -63,13 +63,15 @@ function App() {
     <>
       <h1>Vite + React</h1>
       <Accordion items={items} />
-      <Input.Password
+      <Label htmlFor="label">Label</Label>
+      <Input
+        id="label"
         size="small"
         variant="filled"
         prefix={<User />}
         placeholder="Placeholder"
         // suffix={<User />}
-        // disabled={true}
+        disabled
       />
       <div className="card">
         <Button
