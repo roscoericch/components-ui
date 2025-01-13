@@ -17,7 +17,7 @@ const meta = {
     (Story) => (
       <span>
         <Story />
-        <Input disabled id="label" />
+        <Input className="peer" disabled id="label" />
       </span>
     ),
   ],
