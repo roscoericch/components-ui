@@ -16,6 +16,7 @@
   transform: scale(0.95);
   transform-origin: top;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  border-radius: 6px;
 }
 
 .dropdown--menu.open {
@@ -25,15 +26,19 @@
 
 .dropdown--menu ul {
   list-style-type: none;
-  padding: 0;
+  padding: 2px;
   margin: 0;
+  border-radius: 6px;
+  border: 1px;
+  border-color: transparent;
 }
 
 .dropdown--menu li {
-  padding: 8px 12px;
+  padding: 4px 8px;
   cursor: pointer;
+  width: 98%;
 }
 
 .dropdown--menu li:hover {
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
 }

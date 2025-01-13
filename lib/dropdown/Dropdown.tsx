@@ -4,6 +4,7 @@ import "./dropdown.css";
 import Comp from "../shared/Comp";
 import { DropdownProps, itemProps } from "./types";
 import clsx from "clsx";
+import { Button } from "component-ui";
 
 export function Dropdown({
   options,
@@ -60,13 +61,15 @@ export function Dropdown({
       >
         <ul className="dropdown--menu-list">
           {options.map((option, index) => (
-            <li
-              key={index}
-              className={`dropdown--item`}
+            <Button
               onClick={() => handleSelect(option)}
+              asChild
+              key={index}
+              size="small"
+              variant="text"
             >
-              {option.label}
-            </li>
+              <li className={`dropdown--item`}>{option.label}</li>
+            </Button>
           ))}
         </ul>
       </div>

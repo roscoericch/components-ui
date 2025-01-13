@@ -77,7 +77,11 @@ function App() {
           // disabled
           asChild
         >
-          <a href="#">count is {count}</a>
+          <a href="#">
+            <span>
+              <p>count is {count}</p>
+            </span>
+          </a>
         </Button>
         <Dropdown trigger={["hover"]} options={dropdown_items}>
           <Button

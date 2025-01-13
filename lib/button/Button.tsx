@@ -45,6 +45,12 @@ const buttonVariants = cva("button component-ui-style", {
   ],
 });
 
+const extractElementsFromNode = (node: React.ReactNode) => {
+  if (React.isValidElement(node)) {
+    return <React.Fragment>{node.props.children}</React.Fragment>;
+  } else return node;
+};
+
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({
@@ -76,7 +82,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         0.3
       ),
     } as React.CSSProperties;
-    const Component = asChild ? Comp : "button"; // Default to "div" for custom children
+    const Component = asChild ? Comp : "button";
 
     const content = (
       <>
@@ -90,7 +96,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
         {iconPosition === "left" && icon}
-        {props.children && <span>{props.children}</span>}
+        {extractElementsFromNode(props.children)}
         {iconPosition === "right" && icon}
       </>
     );
