@@ -1,6 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import { Button, Input, Accordion, Dropdown, Label } from "../lib/main";
+import {
+  Button,
+  Input,
+  Accordion,
+  Dropdown,
+  Label,
+  CheckBox,
+} from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
 
@@ -67,11 +74,12 @@ function App() {
       <Input
         id="label"
         size="small"
-        variant="filled"
-        prefix={<User />}
+        // variant="filled"
+        // prefix={<User />}
         placeholder="Placeholder"
         // suffix={<User />}
-        disabled
+        // disabled
+        type="checkbox"
       />
       <div className="card">
         <Button
@@ -98,6 +106,7 @@ function App() {
             count is {count}
           </Button>
         </Dropdown>
+        <CheckBox label="Check" />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

@@ -16,8 +16,8 @@ const meta = {
   decorators: [
     (Story) => (
       <span>
-        <Story />
         <Input className="peer" disabled id="label" />
+        <Story />
       </span>
     ),
   ],

@@ -1,0 +1,55 @@
+.checkbox--container {
+  position: relative;
+}
+
+/* Hide the default checkbox */
+.checkbox--input {
+  display: none;
+}
+
+/* Style the custom checkbox */
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007bff;
+  display: inline-block;
+  position: relative;
+  margin-right: 4px;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* When the checkbox is checked */
+.checkbox--input:checked + .checkbox {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Custom checkmark */
+.checkbox--input:checked + .checkbox::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 4px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Optional: Add hover and focus styles */
+.custom--checkbox:hover .checkbox,
+.custom--checkbox:focus-within .checkbox {
+  border-color: #0056b3;
+}
+
+.custom--checkbox input:focus + .checkbox {
+  outline: 3px solid #aad4ff;
+}
+
+.custom--checkbox {
+  display: inline-flex;
+  align-items: center;
+}
