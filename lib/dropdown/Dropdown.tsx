@@ -25,7 +25,9 @@ export function Dropdown({
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(open);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const toggleDropdown = useCallback(() => setIsOpen((prev) => !prev), []);
+  const toggleDropdown = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
 
   const handleSelect = (option: itemProps) => {
     onDropdownClick(option);
@@ -66,8 +68,8 @@ export function Dropdown({
         role="button"
         className={clsx(`dropdown--toggle`, classes?.trigger)}
         onClick={(e) => {
+          trigger.includes("click") ? toggleDropdown() : () => {};
           children.props.onClick(e);
-          trigger.includes("click") ? toggleDropdown : () => {};
         }}
       >
         {children}

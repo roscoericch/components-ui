@@ -96,7 +96,7 @@ function App() {
             </span>
           </a>
         </Button>
-        <Dropdown trigger={["hover"]} options={dropdown_items}>
+        <Dropdown trigger={["click"]} options={dropdown_items}>
           <Button
             variant="primary"
             theme="#df0909"
