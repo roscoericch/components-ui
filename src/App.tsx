@@ -7,6 +7,7 @@ import {
   Dropdown,
   Label,
   CheckBox,
+  Modal,
 } from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
@@ -65,7 +66,7 @@ const dropdown_items: itemProps[] = [
 ];
 function App() {
   const [count, setCount] = useState(0);
-
+  const [open, setOpen] = useState(false);
   return (
     <>
       <h1>Vite + React</h1>
@@ -86,8 +87,8 @@ function App() {
           variant="text"
           theme="#df0909"
           // ghost
-          onClick={() => setCount((count) => count + 1)}
-          disabled
+          onClick={() => setOpen(true)}
+          // disabled
           // asChild
         >
           <a href="#">
@@ -107,6 +108,17 @@ function App() {
           </Button>
         </Dropdown>
         <CheckBox label="Check" />
+        <CheckBox label="Check2" />
+        <Modal
+          closeable
+          centered
+          onClose={() => {
+            setOpen(false);
+          }}
+          open={open}
+        >
+          modal content
+        </Modal>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

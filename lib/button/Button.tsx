@@ -57,7 +57,7 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ ...props }, forwardedRef) => {
+  ({ iconPosition = "left", ...props }, forwardedRef) => {
     const style = {
       [`--button-${props.variant}-color`]: colorVariation(
         props.destructive ? "#ff4d4f" : props.theme,
@@ -91,9 +91,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             }
           />
         )}
-        {props.iconPosition === "left" && props.icon}
+        {iconPosition === "left" && props.icon}
         {extractElementsFromNode(props.children)}
-        {props.iconPosition === "right" && props.icon}
+        {iconPosition === "right" && props.icon}
       </>
     );
 

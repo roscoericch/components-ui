@@ -1,0 +1,74 @@
+.modal {
+  background-color: white;
+  border-radius: 4px;
+  padding: 2%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 5%;
+  color: black;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  position: relative;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  transform-origin: center; /* Ensures smooth scaling */
+  opacity: 0; /* Default state for dialog */
+  transform: scale(0.8);
+}
+
+.modal.open {
+  animation-name: fadeIn;
+}
+
+.modal.close {
+  animation-name: fadeOut;
+}
+
+.modal:focus-visible {
+  outline: none;
+}
+
+.modal.modal--center {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.modal.mask::backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+  transition: background 0.5s;
+}
+
+.modal .cancel--icon {
+  width: 20px;
+  height: 20px;
+}
+
+.modal .button {
+  padding: 3px;
+  position: absolute;
+  top: 4%;
+  right: 2%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
