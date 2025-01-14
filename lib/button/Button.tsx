@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import clsx from "clsx";
 
 import "./button.css";
-import { darkVariation, lightVariation } from "../utils/theme";
+import { colorVariation } from "../utils/theme";
 import Spin from "../spin/Spin";
 import { ButtonProps } from "./types";
 import Comp from "../shared/Comp";
@@ -59,20 +59,21 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ ...props }, forwardedRef) => {
     const style = {
-      [`--button-${props.variant}-color`]: props.destructive
-        ? "#ff4d4f"
-        : props.theme,
-      [`--button-${props.variant}-color-light`]: lightVariation(
+      [`--button-${props.variant}-color`]: colorVariation(
+        props.destructive ? "#ff4d4f" : props.theme,
+        0.9
+      ),
+      [`--button-${props.variant}-color-light`]: colorVariation(
         props.destructive ? "#ff4d4f" : props.theme,
         0.6
       ),
-      [`--button-${props.variant}-color-light-fade`]: lightVariation(
+      [`--button-${props.variant}-color-light-fade`]: colorVariation(
         props.destructive ? "#ff4d4f" : props.theme,
         0.3
       ),
-      [`--button-${props.variant}-color-dark`]: darkVariation(
+      [`--button-${props.variant}-color-dark`]: colorVariation(
         props.destructive ? "#ff4d4f" : props.theme,
-        0.3
+        1
       ),
     } as React.CSSProperties;
     const Component = props.asChild ? Comp : "button";

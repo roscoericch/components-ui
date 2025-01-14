@@ -1,6 +1,11 @@
 :root {
   --color-primary: #1ea7fd;
+  --color-primary-dark: #077cc4;
+  --color-primary-light: #4195c8;
+  --color-primary-light-fade: #4e84a5;
   --color-danger: #ff4d4f;
+  --color-inactive: #ccc;
+  --color-inactive-light: #e7e4e4;
 }
 
 * {

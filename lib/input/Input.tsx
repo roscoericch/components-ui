@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import "./input.css";
-import { lightVariation } from "../utils/theme";
+import { colorVariation } from "../utils/theme";
 import HideIcon from "../assets/icons/HideIcon";
 import ShowIcon from "../assets/icons/ShowIcon";
 export interface InputProps
@@ -47,9 +47,9 @@ const inputVariants = cva("input component-ui-style", {
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ variant, size, prefix, suffix, theme, ...props }, ref) => {
     const style = {
-      [`--input-theme`]: theme,
-      [`--input-theme-light`]: lightVariation(theme, 0.6),
-      [`--input-theme-light-fade`]: lightVariation(theme, 0.3),
+      [`--input-theme`]: colorVariation(theme),
+      [`--input-theme-light`]: colorVariation(theme, 0.6),
+      [`--input-theme-light-fade`]: colorVariation(theme, 0.3),
     } as React.CSSProperties;
     return (
       <>

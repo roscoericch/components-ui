@@ -55,7 +55,7 @@ export function Dropdown({
   return (
     <div
       ref={dropdownRef}
-      className={`dropdown--container`}
+      className={`dropdown--container component-ui-style`}
       onMouseLeave={
         trigger.includes("hover") ? () => setIsOpen(false) : () => {}
       }

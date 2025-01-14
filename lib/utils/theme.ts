@@ -52,7 +52,7 @@ export const setTheme = (theme?: string) => {
 };
 
 // Helper function to lighten a color by a factor
-export const lightVariation = (color = "#1ea7fd", factor: number) => {
+export const colorVariation = (color = "#1ea7fd", factor = 1) => {
   let [r, g, b] = convertToRgb(color)
     .replace(/^rgb\((\d+), (\d+), (\d+)\)$/, "$1 $2 $3")
     .split(" ")
@@ -62,15 +62,15 @@ export const lightVariation = (color = "#1ea7fd", factor: number) => {
 };
 
 // Helper function to darken a color by a factor
-export const darkVariation = (color = "#1ea7fd", factor: number) => {
-  let [r, g, b] = convertToRgb(color)
-    .replace(/^rgb\((\d+), (\d+), (\d+)\)$/, "$1 $2 $3")
-    .split(" ")
-    .map(Number);
+// export const darkVariation = (color = "#1ea7fd", factor: number) => {
+//   let [r, g, b] = convertToRgb(color)
+//     .replace(/^rgb\((\d+), (\d+), (\d+)\)$/, "$1 $2 $3")
+//     .split(" ")
+//     .map(Number);
 
-  r = Math.max(0, r - factor);
-  g = Math.max(0, g - factor);
-  b = Math.max(0, b - factor);
+//   r = Math.max(0, r - factor);
+//   g = Math.max(0, g - factor);
+//   b = Math.max(0, b - factor);
 
-  return `rgb(${r}, ${g}, ${b})`;
-};
+//   return `rgb(${r}, ${g}, ${b})`;
+// };

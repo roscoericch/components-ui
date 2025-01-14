@@ -4,5 +4,6 @@ export interface CheckBoxProps
     HTMLInputElement
   > {
   label?: string;
-  //   checked?:boolean;
+  theme?: string;
+  indicator?: string; //indicator color
 }
