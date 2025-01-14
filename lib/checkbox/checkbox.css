@@ -45,7 +45,8 @@
 /* Optional: Add hover and focus styles */
 .custom--checkbox:hover:not(.checkbox--disabled) .checkbox,
 .custom--checkbox:focus-within:not(.checkbox--disabled) .checkbox {
-  border-color: var(--checkbox-color-dark, --color-primary-dark);
+  border-color: var(--checkbox-color-light, --color-primary-light);
+  opacity: 0.7;
 }
 
 .custom--checkbox input:focus + .checkbox {
