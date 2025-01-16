@@ -28,7 +28,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
     } as React.CSSProperties;
     return (
       <Label
-        htmlFor={id}
+        htmlFor={props.id ?? id}
         className={checkBoxVariant({ disabled: props.disabled })}
         style={style}
       >
@@ -41,7 +41,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
           checked={checked}
           ref={ref}
           type="checkbox"
-          id={id}
+          id={props.id ?? id}
           className={clsx(props.className, "checkbox--input peer")}
         />
         <span className="checkbox">
