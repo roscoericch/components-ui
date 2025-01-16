@@ -3,7 +3,7 @@ export interface CheckBoxProps
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  label?: string;
+  children?: React.ReactNode;
   theme?: string;
   indicator?: string; //indicator color
 }

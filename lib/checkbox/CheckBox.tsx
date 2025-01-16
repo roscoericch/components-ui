@@ -17,7 +17,7 @@ const checkBoxVariant = cva("component-ui-style custom--checkbox", {
 });
 
 export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
-  ({ label, ...props }, ref) => {
+  ({ children, ...props }, ref) => {
     const [checked, setChecked] = React.useState(props.checked);
     const id = useId();
     const style = {
@@ -51,7 +51,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
             strokeWidth={50}
           />
         </span>
-        {label}
+        {children}
       </Label>
     );
   }

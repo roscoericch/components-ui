@@ -107,8 +107,8 @@ function App() {
             count is {count}
           </Button>
         </Dropdown>
-        <CheckBox label="Check" />
-        <CheckBox label="Check2" />
+        <CheckBox children="Check" />
+        <CheckBox children="Check2" />
         <Modal
           closeable
           centered
