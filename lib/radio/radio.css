@@ -19,10 +19,13 @@
 .radio--button {
   width: 10px;
   height: 10px;
-  padding: 2px;
+  padding: 5px;
   border-radius: 50%;
   transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .radio--button:hover {
+  border: 1px solid var(--color-primary);
+  background-color: white;
 }

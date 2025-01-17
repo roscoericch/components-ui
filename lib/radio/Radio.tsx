@@ -2,38 +2,85 @@
 import "./radio.css";
 import React, { useId, useState } from "react";
 import { Label, Button } from "component-ui";
-import { IRadioProps } from "./types";
+import { IRadioItemProps, IRadioProps } from "./types";
 import clsx from "clsx";
 import { cva } from "class-variance-authority";
 
-const radiovariant = cva("radio--container component-ui-style ");
+const radioVariant = cva("radio--container component-ui-style ");
 
-export const Radio = React.forwardRef<HTMLInputElement, IRadioProps>(
-  ({ children, ...props }, ref) => {
+export const RadioGroup: React.FC<IRadioProps> = ({
+  options,
+  children,
+  value,
+  onChange,
+  classNames,
+}) => {
+  const [active, setActive] = useState(value);
+  const handleChange = (val: any) => {
+    onChange && onChange(val);
+    setActive(val);
+  };
+
+  const renderedChildren = options
+    ? options.map((option, index) => (
+        <Radio
+          key={index}
+          value={option.value}
+          checked={active === option.value}
+          disabled={option.disabled}
+          onChange={() => handleChange(option.value)}
+          className={clsx(classNames?.option)}
+        >
+          {option.children}
+        </Radio>
+      ))
+    : React.Children.map(children, (child) =>
+        React.isValidElement(child) && child.type === Radio
+          ? React.cloneElement(child as React.ReactElement<IRadioItemProps>, {
+              checked: active === child.props?.value,
+              onChange: () => handleChange(child.props?.value),
+              value: child.props.value,
+              disabled: child.props.disabled,
+            })
+          : child
+      );
+
+  return <div className={clsx(classNames?.container)}>{renderedChildren}</div>;
+};
+
+// Radio Component
+export const Radio = React.forwardRef<HTMLInputElement, IRadioItemProps>(
+  ({ value, checked, disabled, onChange, children, className }, ref) => {
     const id = useId();
-    const [checked, setChecked] = useState(props.checked);
+    // const [active,setActive] = useState(value)
     return (
-      <div className={clsx(radiovariant({}), props.className)}>
-        <Button
-          variant={props.checked ? "primary" : "outlined"}
-          className="radio--button"
-          disabled={props.disabled}
-        />
+      <div className={clsx("radio--wrapper")}>
         <input
-          id={props.id ?? id}
-          {...props}
-          onChange={(e) => {
-            setChecked((prev) => !prev);
-            props.onChange && props.onChange(e);
-          }}
-          checked={checked}
-          className={clsx("radio--input peer")}
-          ref={ref}
+          id={id}
           type="radio"
+          value={value}
+          checked={checked}
+          disabled={disabled}
+          onChange={onChange}
+          ref={ref}
+          className="radio--input peer"
         />
-        <Label htmlFor={props.id ?? id}>{children}</Label>
+        <Label
+          htmlFor={id}
+          className={clsx(radioVariant(), className, {
+            "radio--disabled": disabled,
+          })}
+        >
+          <Button
+            variant={checked ? "primary" : "default"}
+            className="radio--button"
+            disabled={disabled}
+          />
+          {children}
+        </Label>
       </div>
     );
   }
 );
+
 Radio.displayName = "Radio";

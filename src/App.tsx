@@ -12,6 +12,7 @@ import {
 } from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
+import { RadioGroup } from "../lib/radio/Radio";
 
 const items = [
   {
@@ -120,7 +121,12 @@ function App() {
         >
           modal content
         </Modal>
-        <Radio>option</Radio>
+        <RadioGroup value="2" onChange={(e) => console.log(e.target)}>
+          <Radio value="1">option</Radio>
+          <Radio value="2">option</Radio>
+        </RadioGroup>
+        <Radio value={"2"} children="single radio" />
+
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
