@@ -8,6 +8,7 @@ import {
   Label,
   CheckBox,
   Modal,
+  Radio,
 } from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
@@ -97,7 +98,7 @@ function App() {
             </span>
           </a>
         </Button>
-        <Dropdown trigger={["click"]} options={dropdown_items}>
+        {/* <Dropdown trigger={["click"]} options={dropdown_items}>
           <Button
             variant="primary"
             theme="#df0909"
@@ -106,7 +107,7 @@ function App() {
           >
             count is {count}
           </Button>
-        </Dropdown>
+        </Dropdown> */}
         <CheckBox children="Check" />
         <CheckBox children="Check2" />
         <Modal
@@ -119,6 +120,7 @@ function App() {
         >
           modal content
         </Modal>
+        <Radio>option</Radio>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

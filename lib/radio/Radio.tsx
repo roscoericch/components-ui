@@ -1,28 +1,39 @@
-"use client"; //nextjs ssr handling
-import React, { useId } from "react";
-import { Label } from "component-ui";
+"use client"; //nextjs ssr--usecase
+import "./radio.css";
+import React, { useId, useState } from "react";
+import { Label, Button } from "component-ui";
 import { IRadioProps } from "./types";
 import clsx from "clsx";
 import { cva } from "class-variance-authority";
 
-const radiovariant = cva("component-ui-style");
+const radiovariant = cva("radio--container component-ui-style ");
 
-const Radio = React.forwardRef<HTMLInputElement, IRadioProps>(
+export const Radio = React.forwardRef<HTMLInputElement, IRadioProps>(
   ({ children, ...props }, ref) => {
     const id = useId();
+    const [checked, setChecked] = useState(props.checked);
     return (
       <div className={clsx(radiovariant({}), props.className)}>
+        <Button
+          variant={props.checked ? "primary" : "outlined"}
+          className="radio--button"
+          disabled={props.disabled}
+        />
         <input
-          id={id}
+          id={props.id ?? id}
           {...props}
-          className={clsx("radio--input")}
+          onChange={(e) => {
+            setChecked((prev) => !prev);
+            props.onChange && props.onChange(e);
+          }}
+          checked={checked}
+          className={clsx("radio--input peer")}
           ref={ref}
           type="radio"
         />
-        <Label htmlFor={id}>{children}</Label>
+        <Label htmlFor={props.id ?? id}>{children}</Label>
       </div>
     );
   }
 );
-
-export default Radio;
+Radio.displayName = "Radio";
