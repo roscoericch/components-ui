@@ -92,7 +92,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
         {iconPosition === "left" && props.icon}
-        {extractElementsFromNode(props.children)}
+        {props.asChild
+          ? extractElementsFromNode(props.children)
+          : props.children}
         {iconPosition === "right" && props.icon}
       </>
     );

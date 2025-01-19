@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: row;
   gap: 4px;
-  align-items: center;
+  align-items: flex-start;
   font-size: 14px;
 }
 
@@ -19,13 +19,27 @@
 .radio--button {
   width: 10px;
   height: 10px;
-  padding: 5px;
+  padding: 8px;
   border-radius: 50%;
   transition: all 0.3s ease;
-  border: 1px solid transparent;
+  position: relative;
+  outline: none;
 }
 
-.radio--button:hover {
-  border: 1px solid var(--color-primary);
+.radio--container .radio--button .radio--disc {
+  padding: 3px;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.radio--container.radio--checked .radio--button .radio--disc {
   background-color: white;
+}
+
+.radio--container.radio--disabled.radio--checked .radio--button .radio--disc {
+  background-color: var(--color-inactive);
+}
+
+.radio--wrapper:hover .radio--button:not(:disabled) {
+  box-shadow: var(--color-primary) 0px 0px 0px 1px inset;
 }

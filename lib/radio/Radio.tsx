@@ -13,7 +13,7 @@ export const RadioGroup: React.FC<IRadioProps> = ({
   children,
   value,
   onChange,
-  classNames,
+  className,
 }) => {
   const [active, setActive] = useState(value);
   const handleChange = (val: any) => {
@@ -29,7 +29,7 @@ export const RadioGroup: React.FC<IRadioProps> = ({
           checked={active === option.value}
           disabled={option.disabled}
           onChange={() => handleChange(option.value)}
-          className={clsx(classNames?.option)}
+          className={clsx(option.className)}
         >
           {option.children}
         </Radio>
@@ -45,7 +45,7 @@ export const RadioGroup: React.FC<IRadioProps> = ({
           : child
       );
 
-  return <div className={clsx(classNames?.container)}>{renderedChildren}</div>;
+  return <div className={clsx(className)}>{renderedChildren}</div>;
 };
 
 // Radio Component
@@ -69,13 +69,16 @@ export const Radio = React.forwardRef<HTMLInputElement, IRadioItemProps>(
           htmlFor={id}
           className={clsx(radioVariant(), className, {
             "radio--disabled": disabled,
+            "radio--checked": checked,
           })}
         >
           <Button
             variant={checked ? "primary" : "default"}
             className="radio--button"
             disabled={disabled}
-          />
+          >
+            <span className="radio--disc" />
+          </Button>
           {children}
         </Label>
       </div>

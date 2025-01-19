@@ -121,9 +121,9 @@ function App() {
         >
           modal content
         </Modal>
-        <RadioGroup value="2" onChange={(e) => console.log(e.target)}>
-          <Radio value="1">option</Radio>
-          <Radio value="2">option</Radio>
+        <RadioGroup onChange={(e) => console.log(e.target)}>
+          <Radio value="1">option 1</Radio>
+          <Radio value="2">option 2</Radio>
         </RadioGroup>
         <Radio value={"2"} children="single radio" />
 

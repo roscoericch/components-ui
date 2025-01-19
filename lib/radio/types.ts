@@ -4,14 +4,14 @@ export type IRadioProps =
       children?: never; // No children allowed if options are provided
       value?: any;
       onChange?: (e: Event) => void;
-      classNames?: { container?: string; option?: string };
+      className?: string;
     }
   | {
       options?: never; // No options allowed if children are provided
       children: React.ReactNode;
       value?: any;
       onChange?: (e: Event) => void;
-      classNames?: { container?: string; option?: string };
+      className?: string;
     };
 
 export interface IRadioItemProps {
