@@ -1,6 +1,6 @@
 "use client"; //nextjs ssr--usecase
 import "./radio.css";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { Label, Button } from "component-ui";
 import { IRadioItemProps, IRadioProps } from "./types";
 import clsx from "clsx";
@@ -14,6 +14,7 @@ export const RadioGroup: React.FC<IRadioProps> = ({
   value,
   onChange,
   className,
+  ...props
 }) => {
   const [active, setActive] = useState(value);
   const handleChange = (val: any) => {
@@ -45,23 +46,33 @@ export const RadioGroup: React.FC<IRadioProps> = ({
           : child
       );
 
-  return <div className={clsx(className)}>{renderedChildren}</div>;
+  return (
+    <div className={clsx(className)} {...props}>
+      {renderedChildren}
+    </div>
+  );
 };
 
 // Radio Component
 export const Radio = React.forwardRef<HTMLInputElement, IRadioItemProps>(
   ({ value, checked, disabled, onChange, children, className }, ref) => {
     const id = useId();
-    // const [active,setActive] = useState(value)
+    const [active, setActive] = useState(checked);
+    useEffect(() => {
+      setActive(checked);
+    }, [checked]);
     return (
       <div className={clsx("radio--wrapper")}>
         <input
           id={id}
           type="radio"
           value={value}
-          checked={checked}
+          checked={active}
           disabled={disabled}
-          onChange={onChange}
+          onChange={(e) => {
+            if (typeof checked === "undefined") setActive(e.target.checked);
+            onChange && onChange(e);
+          }}
           ref={ref}
           className="radio--input peer"
         />
@@ -69,11 +80,11 @@ export const Radio = React.forwardRef<HTMLInputElement, IRadioItemProps>(
           htmlFor={id}
           className={clsx(radioVariant(), className, {
             "radio--disabled": disabled,
-            "radio--checked": checked,
+            "radio--checked": active,
           })}
         >
           <Button
-            variant={checked ? "primary" : "default"}
+            variant={active ? "primary" : "default"}
             className="radio--button"
             disabled={disabled}
           >
