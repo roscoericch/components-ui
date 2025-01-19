@@ -71,6 +71,8 @@ export function Dropdown({
           trigger.includes("click") ? toggleDropdown() : () => {};
           children.props.onClick(e);
         }}
+        aria-expanded={isOpen}
+        aria-haspopup={"menu"}
       >
         {children}
       </Comp>
