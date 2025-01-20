@@ -18,7 +18,7 @@ export const RadioGroup: React.FC<IRadioProps> = ({
 }) => {
   const [active, setActive] = useState(value);
   const handleChange = (val: any) => {
-    onChange && onChange(val);
+    onChange?.(val);
     setActive(val);
   };
 
@@ -71,7 +71,7 @@ export const Radio = React.forwardRef<HTMLInputElement, IRadioItemProps>(
           disabled={disabled}
           onChange={(e) => {
             if (typeof checked === "undefined") setActive(e.target.checked);
-            onChange && onChange(e);
+            onChange?.(e);
           }}
           ref={ref}
           className="radio--input peer"

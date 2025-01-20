@@ -80,7 +80,7 @@ export function Dropdown({
         className={clsx(`dropdown--menu`, classes?.popup, { open: isOpen })}
         style={style}
       >
-        <ul className="dropdown--menu-list">
+        <ul tabIndex={0} role="listbox" className="dropdown--menu-list">
           {options.map((option, index) => (
             <Button
               onClick={() => {
@@ -95,6 +95,7 @@ export function Dropdown({
               destructive={option.destructive}
               disabled={option.disabled}
               icon={option.icon}
+              role="option"
             >
               <li className={itemVariation({ disabled: option.disabled })}>
                 {option.label}
