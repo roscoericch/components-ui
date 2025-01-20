@@ -8,3 +8,4 @@ export { Label } from "./label/Label";
 export { CheckBox } from "./checkbox/CheckBox";
 export { Modal } from "./modal/Modal";
 export { Radio } from "./radio/Radio";
+export { Select } from "./select/Select";

@@ -1,0 +1,59 @@
+.select--container {
+  position: relative;
+  display: inline-block;
+}
+
+.select--menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.1);
+  transform-origin: top;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  border-radius: 6px;
+}
+
+.select--menu.open {
+  opacity: 1;
+  scale: 1;
+  transform: scale(1);
+}
+
+.select--menu ul {
+  list-style-type: none;
+  padding: 4px;
+  margin: 0;
+  border-radius: 6px;
+  border: 1px;
+  border-color: transparent;
+}
+
+.select--menu li {
+  padding: 12px;
+  width: 100%;
+  border-color: transparent;
+}
+
+.select--menu li:hover {
+  /* background-color: #f1f1f1; */
+}
+
+.select--menu-button {
+  text-align: center;
+  justify-content: flex-start;
+  font-size: 12px;
+}
+
+.select--menu .select--item-disabled {
+  color: "#ccc";
+}
+
+.select--trigger .select--trigger-input {
+  cursor: pointer;
+}

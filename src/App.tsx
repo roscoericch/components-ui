@@ -9,6 +9,7 @@ import {
   CheckBox,
   Modal,
   Radio,
+  Select,
 } from "../lib/main";
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
@@ -126,7 +127,13 @@ function App() {
           <Radio value="2">option 2</Radio>
         </RadioGroup>
         <Radio value={"2"} children="single radio" />
-
+        <Select
+          options={[
+            { label: "label", value: "value" },
+            { label: "option", value: "option" },
+          ]}
+          search
+        />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
