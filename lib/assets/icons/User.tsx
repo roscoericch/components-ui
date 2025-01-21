@@ -1,3 +1,4 @@
+"use client";
 const User = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg

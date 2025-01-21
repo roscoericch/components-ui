@@ -1,3 +1,4 @@
+"use client";
 const ArrowRightIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg

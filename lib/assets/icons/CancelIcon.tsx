@@ -1,3 +1,4 @@
+"use client";
 const CancelIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg

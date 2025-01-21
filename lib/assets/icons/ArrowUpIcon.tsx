@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 
 const ArrowUpIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
   return (

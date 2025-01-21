@@ -1,3 +1,4 @@
+"use client";
 const CheckIcon = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg

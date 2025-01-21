@@ -72,6 +72,13 @@ function App() {
   const [open, setOpen] = useState(false);
   return (
     <>
+      <Select
+        options={[
+          { label: "label", value: "value" },
+          { label: "option", value: "option" },
+        ]}
+        search
+      />
       <h1>Vite + React</h1>
       <Accordion items={items} />
       <Label htmlFor="label">Label</Label>

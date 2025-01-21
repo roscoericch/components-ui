@@ -1,3 +1,4 @@
+"use client";
 const ShowIcon = ({ ...props }: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
