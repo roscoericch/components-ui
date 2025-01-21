@@ -4,6 +4,7 @@ import { ISelectOptionProps, ISelectProps, SelectRef } from "./types";
 import { Button, Input } from "component-ui";
 import clsx from "clsx";
 import { cva } from "class-variance-authority";
+import FolderIcon from "../assets/icons/FolderIcon";
 
 const itemVariation = cva("select--item", {
   variants: {
@@ -12,15 +13,15 @@ const itemVariation = cva("select--item", {
 });
 
 export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
-  ({ ...props }, ref) => {
+  ({ options: propOptions = [], ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [options, setOptions] = useState(propOptions ?? []);
     const [selectedValue, setSelectedValue] = useState<ISelectOptionProps>(
-      props.options?.find((e) => e.value === props.value) ?? {
+      options?.find((e) => e.value === props.value) ?? {
         label: "",
         value: "",
       }
     );
-    const [options, setOptions] = useState(props.options);
     const [inputvalue, setInputValue] = useState("");
     const [dropdownPosition, setDropdownPosition] = useState<
       ISelectProps["position"]
@@ -72,7 +73,7 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
     const handleSelect = (option: ISelectOptionProps) => {
       if (option.disabled) return;
       setInputValue(option.label);
-      setOptions(props.options);
+      setOptions(propOptions);
       setSelectedValue(option);
       setIsOpen(false);
       props.onSelect?.(option.value);
@@ -100,13 +101,19 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
           className={clsx("select--trigger", {
             "select--trigger-disabled": props.disabled,
           })}
-          onClick={() => !props.disabled && setIsOpen((prev) => !prev)}
+          onClick={() => {
+            if (!props.disabled) {
+              isOpen && triggerRef.current?.blur();
+              setIsOpen((prev) => !prev);
+            }
+          }}
           tabIndex={0}
           role="button"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
         >
           <Input
+            ref={triggerRef}
             placeholder={props.placeholder ?? "Select"}
             className="select--trigger-input"
             value={inputvalue}
@@ -117,14 +124,16 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               if (props.onSearch) {
                 props.onSearch(e.target.value);
               } else {
-                setOptions(
-                  props.options?.filter((v) => v.label.includes(e.target.value))
-                );
+                setOptions([
+                  ...propOptions?.filter((v) =>
+                    v.label.includes(e.target.value)
+                  ),
+                ]);
               }
             }}
             onBlur={() => {
               setInputValue(selectedValue.label);
-              setOptions(props.options);
+              setOptions(propOptions);
             }}
           />
         </div>
@@ -140,27 +149,34 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
           ref={dropdownRef}
           // style={style}
         >
-          <ul tabIndex={0} role="listbox" className="select--menu-list">
-            {options?.map((option, index) => (
-              <Button
-                onClick={() => {
-                  if (!option.disabled) handleSelect(option);
-                }}
-                asChild
-                key={index}
-                variant={"text"}
-                theme="#2d2c2c"
-                className="select--menu-button"
-                size="large"
-                disabled={option.disabled}
-                role="option"
-              >
-                <li className={itemVariation({ disabled: option.disabled })}>
-                  {option.label}
-                </li>
-              </Button>
-            ))}
-          </ul>
+          {options.length < 1 ? (
+            <span className="select--options-container">
+              <FolderIcon className="select--options-container-placeholder" />
+              <p>No Data</p>
+            </span>
+          ) : (
+            <ul tabIndex={0} role="listbox" className="select--menu-list">
+              {options?.map((option, index) => (
+                <Button
+                  onClick={() => {
+                    if (!option.disabled) handleSelect(option);
+                  }}
+                  asChild
+                  key={index}
+                  variant={"text"}
+                  theme="#2d2c2c"
+                  className="select--menu-button"
+                  size="large"
+                  disabled={option.disabled}
+                  role="option"
+                >
+                  <li className={itemVariation({ disabled: option.disabled })}>
+                    {option.label}
+                  </li>
+                </Button>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     );

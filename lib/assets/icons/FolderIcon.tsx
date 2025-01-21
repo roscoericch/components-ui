@@ -1,5 +1,5 @@
 "use client";
-const FolderIcon = () => {
+const FolderIcon = (props: React.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -7,7 +7,7 @@ const FolderIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-6"
+      className={props.className}
     >
       <path
         strokeLinecap="round"

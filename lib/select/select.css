@@ -10,7 +10,8 @@
   border: 1px solid #ccc;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   min-width: 200px;
-  max-height: 700px;
+  max-height: 500px;
+  /* min-height: 100px; */
   overflow-y: scroll;
   z-index: 1000;
   opacity: 0;
@@ -65,4 +66,21 @@
 
 .select--trigger .select--trigger-input {
   cursor: pointer;
+}
+
+.select--options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  color: #ccc;
+  font-size: 14px;
+  padding: 2%;
+}
+
+.select--options-placeholder {
+  width: 40px;
+  height: 40px;
+  stroke: #ccc;
+  display: inline-block;
 }
