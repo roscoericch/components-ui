@@ -13,22 +13,23 @@ const itemVariation = cva("select--item", {
 });
 
 export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
-  ({ options: propOptions = [], ...props }, ref) => {
+  ({ options: propOptions = [], placeholder = "Select", ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [options, setOptions] = useState(propOptions ?? []);
     const [selectedValue, setSelectedValue] = useState<ISelectOptionProps>(
       options?.find((e) => e.value === props.value) ?? {
-        label: "",
+        label: placeholder,
         value: "",
       }
     );
     const [inputvalue, setInputValue] = useState("");
+    const [currentIndex, setCurrentIndex] = useState(5);
     const [dropdownPosition, setDropdownPosition] = useState<
       ISelectProps["position"]
     >(props.position ?? "bottom");
     const containerRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLInputElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLUListElement>(null);
     useImperativeHandle(
       ref,
       () => {
@@ -48,7 +49,7 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
       if (!triggerRef.current || !dropdownRef.current) return;
 
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const dropdownHeight = dropdownRef.current.offsetHeight;
+      const dropdownHeight = dropdownRef.current.offsetHeight + 10;
 
       const spaceBelow = window.innerHeight - triggerRect.bottom;
       // const spaceAbove = triggerRect.top;
@@ -72,11 +73,23 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
     // Handle selection
     const handleSelect = (option: ISelectOptionProps) => {
       if (option.disabled) return;
-      setInputValue(option.label);
+      setInputValue("");
       setOptions(propOptions);
       setSelectedValue(option);
       setIsOpen(false);
       props.onSelect?.(option.value);
+    };
+
+    const handleKeyDown: React.KeyboardEventHandler = (event) => {
+      if (event.key === "ArrowDown") {
+        setCurrentIndex((prevIndex) =>
+          Math.min(prevIndex + 1, options.length - 1)
+        );
+      } else if (event.key === "ArrowUp") {
+        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+      } else if (event.key === "Enter") {
+        setSelectedValue(options[currentIndex]);
+      }
     };
 
     // Close dropdown when clicking outside
@@ -88,6 +101,18 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
         setIsOpen(false);
       }
     };
+
+    useEffect(() => {
+      if (dropdownRef.current) {
+        const currentItem = dropdownRef.current.children[currentIndex];
+        if (currentItem) {
+          currentItem.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        }
+      }
+    }, [currentIndex]);
 
     useEffect(() => {
       document.addEventListener("mousedown", handleClickOutside);
@@ -114,13 +139,15 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
         >
           <Input
             ref={triggerRef}
-            placeholder={props.placeholder ?? "Select"}
-            className="select--trigger-input"
-            value={inputvalue}
+            placeholder={selectedValue.label}
+            className={clsx("select--trigger-input", {
+              "select--trigger-placeholder": selectedValue.label,
+            })}
+            // value={inputvalue}
             disabled={props.disabled}
             onMouseDown={(e) => !props.search && e.preventDefault()}
             onChange={(e) => {
-              setInputValue(e.target.value);
+              // setInputValue(e.target.value);
               if (props.onSearch) {
                 props.onSearch(e.target.value);
               } else {
@@ -135,6 +162,12 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               setInputValue(selectedValue.label);
               setOptions(propOptions);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                dropdownRef.current?.focus();
+                dropdownRef.current?.scrollTo({ top: 0 });
+              }
+            }}
           />
         </div>
         <div
@@ -146,8 +179,8 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               open: isOpen,
             }
           )}
-          ref={dropdownRef}
-          // style={style}
+          onKeyDown={handleKeyDown}
+          onBlur={() => setCurrentIndex(0)}
         >
           {options.length < 1 ? (
             <span className="select--options-container">
@@ -155,7 +188,12 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               <p>No Data</p>
             </span>
           ) : (
-            <ul tabIndex={0} role="listbox" className="select--menu-list">
+            <ul
+              ref={dropdownRef}
+              tabIndex={0}
+              role="listbox"
+              className="select--menu-list"
+            >
               {options?.map((option, index) => (
                 <Button
                   onClick={() => {
@@ -163,14 +201,25 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
                   }}
                   asChild
                   key={index}
-                  variant={"text"}
+                  onMouseEnter={() => {
+                    setCurrentIndex(index);
+                  }}
+                  variant={
+                    option.value === selectedValue.value ? "primary" : "text"
+                  }
                   theme="#2d2c2c"
-                  className="select--menu-button"
+                  className={clsx("select--menu-button", {
+                    // "select--menu-button-active": index === currentIndex,
+                  })}
                   size="large"
                   disabled={option.disabled}
                   role="option"
+                  // aria-current={index === currentIndex}
                 >
-                  <li className={itemVariation({ disabled: option.disabled })}>
+                  <li
+                    tabIndex={1}
+                    className={itemVariation({ disabled: option.disabled })}
+                  >
                     {option.label}
                   </li>
                 </Button>

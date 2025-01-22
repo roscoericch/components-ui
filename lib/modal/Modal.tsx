@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ModalProps } from "./types";
 import { cva } from "class-variance-authority";
 import CancelIcon from "../assets/icons/CancelIcon";
@@ -48,7 +49,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
       closeDialog();
     }
   }, [props.open]);
-  return (
+  return createPortal(
     <dialog
       className={modalvariants({ centered: props.centered, open: props.open })}
       onClick={handleBackdropClick}
@@ -65,6 +66,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
         />
       )}
       {props.children}
-    </dialog>
+    </dialog>,
+    document.body
   );
 };

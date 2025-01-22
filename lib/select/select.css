@@ -10,7 +10,7 @@
   border: 1px solid #ccc;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   min-width: 200px;
-  max-height: 500px;
+  max-height: 300px;
   /* min-height: 100px; */
   overflow-y: scroll;
   z-index: 1000;
@@ -54,10 +54,26 @@
   /* background-color: #f1f1f1; */
 }
 
+/* .select--menu.open:focus-visible .select--menu-button {
+  cursor: none;
+} */
+
 .select--menu-button {
   text-align: center;
   justify-content: flex-start;
   font-size: 12px;
+}
+
+.select--menu-button:focus-visible {
+  background-color: var(--color-inactive);
+}
+
+.select--menu-button[aria-current="true"] {
+  background-color: var(--color-inactive);
+}
+
+.select--menu-button.select--menu-button-active {
+  background-color: var(--color-inactive);
 }
 
 .select--menu .select--item-disabled {
@@ -66,6 +82,10 @@
 
 .select--trigger .select--trigger-input {
   cursor: pointer;
+}
+
+..select--trigger-placeholder::placeholder {
+  color: black;
 }
 
 .select--options-container {
@@ -79,8 +99,8 @@
 }
 
 .select--options-placeholder {
-  width: 40px;
-  height: 40px;
+  width: 10px;
+  height: 10px;
   stroke: #ccc;
   display: inline-block;
 }

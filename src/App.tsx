@@ -76,6 +76,22 @@ function App() {
         options={[
           { label: "label", value: "value" },
           { label: "option", value: "option" },
+          { label: "option1", value: "option1" },
+          { label: "option2", value: "option2" },
+          { label: "option3", value: "option3" },
+          { label: "option4", value: "option4" },
+          { label: "option5", value: "option5" },
+          { label: "option6", value: "option6" },
+          { label: "option7", value: "option7" },
+          { label: "option8", value: "option8" },
+          { label: "option9", value: "option9" },
+          { label: "optiona", value: "optiona" },
+          { label: "options", value: "options" },
+          { label: "optiond", value: "optiond" },
+          { label: "optionf", value: "optionf" },
+          { label: "optiong", value: "optiong" },
+          { label: "optionh", value: "optionh" },
+          { label: "optionj", value: "optionj" },
         ]}
         search
       />
@@ -136,8 +152,24 @@ function App() {
         <Radio value={"2"} children="single radio" />
         <Select
           options={[
-            { label: "label", value: "value" },
+            { label: "label", value: "value", disabled: true },
             { label: "option", value: "option" },
+            { label: "option1", value: "option1" },
+            { label: "option2", value: "option2" },
+            { label: "option3", value: "option3" },
+            { label: "option4", value: "option4" },
+            { label: "option5", value: "option5" },
+            { label: "option6", value: "option6" },
+            { label: "option7", value: "option7" },
+            { label: "option8", value: "option8" },
+            { label: "option9", value: "option9" },
+            { label: "optiona", value: "optiona" },
+            { label: "options", value: "options" },
+            { label: "optiond", value: "optiond" },
+            { label: "optionf", value: "optionf" },
+            { label: "optiong", value: "optiong" },
+            { label: "optionh", value: "optionh" },
+            { label: "optionj", value: "optionj" },
           ]}
           search
         />
