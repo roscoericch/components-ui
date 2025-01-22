@@ -6,6 +6,7 @@ import { DropdownProps, itemProps } from "./types";
 import clsx from "clsx";
 import { cva } from "class-variance-authority";
 import { Button } from "component-ui";
+import { createPortal } from "react-dom";
 
 const itemVariation = cva("dropdown--item", {
   variants: {
@@ -76,34 +77,37 @@ export function Dropdown({
       >
         {children}
       </Comp>
-      <div
-        className={clsx(`dropdown--menu`, classes?.popup, { open: isOpen })}
-        style={style}
-      >
-        <ul tabIndex={0} role="listbox" className="dropdown--menu-list">
-          {options.map((option, index) => (
-            <Button
-              onClick={() => {
-                if (!option.disabled) handleSelect(option);
-              }}
-              asChild
-              key={index}
-              variant={"text"}
-              theme="#2d2c2c"
-              className="dropdown--menu-button"
-              size="large"
-              destructive={option.destructive}
-              disabled={option.disabled}
-              icon={option.icon}
-              role="option"
-            >
-              <li className={itemVariation({ disabled: option.disabled })}>
-                {option.label}
-              </li>
-            </Button>
-          ))}
-        </ul>
-      </div>
+      {createPortal(
+        <div
+          className={clsx(`dropdown--menu`, classes?.popup, { open: isOpen })}
+          style={style}
+        >
+          <ul tabIndex={0} role="listbox" className="dropdown--menu-list">
+            {options.map((option, index) => (
+              <Button
+                onClick={() => {
+                  if (!option.disabled) handleSelect(option);
+                }}
+                asChild
+                key={index}
+                variant={"text"}
+                theme="#2d2c2c"
+                className="dropdown--menu-button"
+                size="large"
+                destructive={option.destructive}
+                disabled={option.disabled}
+                icon={option.icon}
+                role="option"
+              >
+                <li className={itemVariation({ disabled: option.disabled })}>
+                  {option.label}
+                </li>
+              </Button>
+            ))}
+          </ul>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
