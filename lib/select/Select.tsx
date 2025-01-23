@@ -29,7 +29,7 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
     >(props.position ?? "bottom");
     const containerRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLInputElement>(null);
-    const dropdownRef = useRef<HTMLUListElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     useImperativeHandle(
       ref,
       () => {
@@ -179,6 +179,7 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               open: isOpen,
             }
           )}
+          ref={dropdownRef}
           onKeyDown={handleKeyDown}
           onBlur={() => setCurrentIndex(0)}
         >
@@ -188,41 +189,15 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
               <p>No Data</p>
             </span>
           ) : (
-            <ul
-              ref={dropdownRef}
-              tabIndex={0}
-              role="listbox"
-              className="select--menu-list"
-            >
+            <ul tabIndex={0} role="listbox" className="select--menu-list">
               {options?.map((option, index) => (
-                <Button
-                  onClick={() => {
-                    if (!option.disabled) handleSelect(option);
-                  }}
-                  asChild
+                <SelectItem
+                  option={option}
                   key={index}
-                  onMouseEnter={() => {
-                    setCurrentIndex(index);
-                  }}
-                  variant={
-                    option.value === selectedValue.value ? "primary" : "text"
-                  }
-                  theme="#2d2c2c"
-                  className={clsx("select--menu-button", {
-                    // "select--menu-button-active": index === currentIndex,
-                  })}
-                  size="large"
-                  disabled={option.disabled}
-                  role="option"
-                  // aria-current={index === currentIndex}
-                >
-                  <li
-                    tabIndex={1}
-                    className={itemVariation({ disabled: option.disabled })}
-                  >
-                    {option.label}
-                  </li>
-                </Button>
+                  handleSelect={handleSelect}
+                  selected={option.value === selectedValue.value}
+                  focused={index === currentIndex}
+                />
               ))}
             </ul>
           )}
@@ -231,5 +206,52 @@ export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
     );
   }
 );
+
+export const SelectItem = ({
+  option,
+  selected,
+  handleSelect,
+  focused,
+}: {
+  option: ISelectOptionProps;
+  selected: boolean;
+  handleSelect: (item: ISelectOptionProps) => void;
+  focused: boolean;
+}) => {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (focused) ref.current?.focus();
+    else ref.current?.blur();
+  }, [focused]);
+  return (
+    <Button
+      onClick={() => {
+        if (!option.disabled) handleSelect(option);
+      }}
+      asChild
+      ref={ref}
+      onMouseEnter={() => {
+        ref.current?.focus();
+      }}
+      onMouseLeave={() => {
+        ref.current?.blur();
+      }}
+      variant={selected ? "primary" : "text"}
+      theme="#2d2c2c"
+      className={clsx("select--menu-button", {
+        // "select--menu-button-active": index === currentIndex,
+      })}
+      size="large"
+      disabled={option.disabled}
+      role="option"
+      aria-selected={selected}
+      // aria-current={index === currentIndex}
+    >
+      <li tabIndex={1} className={itemVariation({ disabled: option.disabled })}>
+        {option.label}
+      </li>
+    </Button>
+  );
+};
 
 Select.displayName = "Select";

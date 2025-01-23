@@ -123,7 +123,7 @@ function App() {
             </span>
           </a>
         </Button>
-        {/* <Dropdown trigger={["click"]} options={dropdown_items}>
+        <Dropdown trigger={["click"]} options={dropdown_items}>
           <Button
             variant="primary"
             theme="#df0909"
@@ -132,7 +132,7 @@ function App() {
           >
             count is {count}
           </Button>
-        </Dropdown> */}
+        </Dropdown>
         <CheckBox children="Check" />
         <CheckBox children="Check2" />
         <Modal
