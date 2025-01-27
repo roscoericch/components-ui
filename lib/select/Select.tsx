@@ -1,257 +1,229 @@
 import "./select.css";
-import React, { useState, useEffect, useRef, useImperativeHandle } from "react";
-import { ISelectOptionProps, ISelectProps, SelectRef } from "./types";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useId,
+  type KeyboardEvent,
+  type MouseEvent,
+} from "react";
 import { Button, Input } from "component-ui";
 import clsx from "clsx";
-import { cva } from "class-variance-authority";
-import FolderIcon from "../assets/icons/FolderIcon";
+import { createPortal } from "react-dom";
+import Comp from "../shared/Comp";
+import { ISelectProps } from "./types";
 
-const itemVariation = cva("select--item", {
-  variants: {
-    disabled: { true: "select--item-disabled", false: null },
-  },
-});
+// interface AccessibleDropdownProps<T> {
+//   options: Array<Option<T>>;
+//   value?: T;
+//   onChange?: (value: T) => void;
+//   placeholder?: string;
+//   className?: string;
+//   disabled?: boolean;
+//   renderNoOptions?: () => ReactNode;
+//   search?: boolean;
+// }
 
-export const Select = React.forwardRef<SelectRef, Partial<ISelectProps>>(
-  ({ options: propOptions = [], placeholder = "Select", ...props }, ref) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [options, setOptions] = useState(propOptions ?? []);
-    const [selectedValue, setSelectedValue] = useState<ISelectOptionProps>(
-      options?.find((e) => e.value === props.value) ?? {
-        label: placeholder,
-        value: "",
-      }
-    );
-    const [inputvalue, setInputValue] = useState("");
-    const [currentIndex, setCurrentIndex] = useState(5);
-    const [dropdownPosition, setDropdownPosition] = useState<
-      ISelectProps["position"]
-    >(props.position ?? "bottom");
-    const containerRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLInputElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          focus() {
-            triggerRef.current?.focus();
-          },
-          blur() {
-            triggerRef.current?.blur();
-          },
-        };
-      },
-      []
-    );
+export const Select = <T,>({
+  options,
+  value,
+  onChange,
+  placeholder = "Select an option",
+  className = "",
+  disabled = false,
+  renderNoOptions = () => "No options available",
+  search = false,
+}: ISelectProps<T>) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [internalValue, setInternalValue] = useState<T | null>(value ?? null);
+  const [inputValue, setInputValue] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [internalOptions, setInternalOptions] = useState(options);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const listboxRef = useRef<HTMLUListElement>(null);
 
-    const updateDropdownPosition = () => {
-      if (!triggerRef.current || !dropdownRef.current) return;
+  const isControlled = value !== undefined;
+  const currentValue = isControlled ? value : internalValue;
 
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const dropdownHeight = dropdownRef.current.offsetHeight + 10;
+  const dropdownId = useId();
+  const listboxId = `${dropdownId}-listbox`;
 
-      const spaceBelow = window.innerHeight - triggerRect.bottom;
-      // const spaceAbove = triggerRect.top;
+  useEffect(() => {
+    if (isControlled) {
+      setInternalValue(value ?? null);
+    }
+  }, [value, isControlled]);
 
-      // Choose position based on available space
-      setDropdownPosition(spaceBelow >= dropdownHeight ? "bottom" : "top");
-    };
-
-    useEffect(() => {
-      if (isOpen) {
-        updateDropdownPosition();
-        window.addEventListener("resize", updateDropdownPosition);
-        window.addEventListener("scroll", updateDropdownPosition);
-      }
-      return () => {
-        window.removeEventListener("resize", updateDropdownPosition);
-        window.removeEventListener("scroll", updateDropdownPosition);
-      };
-    }, [isOpen]);
-
-    // Handle selection
-    const handleSelect = (option: ISelectOptionProps) => {
-      if (option.disabled) return;
-      setInputValue("");
-      setOptions(propOptions);
-      setSelectedValue(option);
-      setIsOpen(false);
-      props.onSelect?.(option.value);
-    };
-
-    const handleKeyDown: React.KeyboardEventHandler = (event) => {
-      if (event.key === "ArrowDown") {
-        setCurrentIndex((prevIndex) =>
-          Math.min(prevIndex + 1, options.length - 1)
-        );
-      } else if (event.key === "ArrowUp") {
-        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      } else if (event.key === "Enter") {
-        setSelectedValue(options[currentIndex]);
-      }
-    };
-
-    // Close dropdown when clicking outside
-    const handleClickOutside = (e: MouseEvent) => {
+  useEffect(() => {
+    const handleClickOutside = (event: globalThis.MouseEvent) => {
       if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
       }
     };
 
-    useEffect(() => {
-      if (dropdownRef.current) {
-        const currentItem = dropdownRef.current.children[currentIndex];
-        if (currentItem) {
-          currentItem.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-          });
-        }
-      }
-    }, [currentIndex]);
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside);
+    }
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isOpen]);
 
-    useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
-    return (
-      <div className="component-ui-style select--container" ref={containerRef}>
-        <div
-          className={clsx("select--trigger", {
-            "select--trigger-disabled": props.disabled,
-          })}
-          onClick={() => {
-            if (!props.disabled) {
-              isOpen && triggerRef.current?.blur();
-              setIsOpen((prev) => !prev);
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          aria-expanded={isOpen}
-          aria-haspopup="listbox"
-        >
+  useEffect(() => {
+    if (isOpen && listboxRef.current && activeIndex >= 0) {
+      const activeOption = listboxRef.current.children[activeIndex];
+      activeOption?.scrollIntoView({ block: "nearest" });
+    }
+  }, [activeIndex, isOpen]);
+
+  const handleButtonKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+      case "ArrowUp": {
+        e.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+          setActiveIndex(0);
+        } else {
+          const increment = e.key === "ArrowDown" ? 1 : -1;
+          let newIndex = activeIndex + increment;
+          if (newIndex < 0) newIndex = options.length - 1;
+          if (newIndex >= options.length) newIndex = 0;
+          setActiveIndex(newIndex);
+        }
+        break;
+      }
+
+      case "Enter":
+      case " ": {
+        e.preventDefault();
+        if (isOpen && activeIndex >= 0 && options[activeIndex]) {
+          handleSelection(options[activeIndex].value);
+        }
+        setIsOpen(!isOpen);
+        break;
+      }
+
+      case "Escape":
+        e.preventDefault();
+        setIsOpen(false);
+        break;
+
+      case "Tab":
+        setIsOpen(false);
+        break;
+    }
+  };
+
+  const handleSelection = (value: T) => {
+    if (!isControlled) {
+      setInternalValue(value);
+    }
+    if (search && inputValue) {
+      setInputValue("");
+      setInternalOptions(options); // Reset options
+    }
+    onChange?.(value);
+    setIsOpen(false);
+    buttonRef.current?.focus();
+  };
+
+  const selectedLabel =
+    options.find((opt) => opt.value === currentValue)?.label || placeholder;
+
+  return (
+    <div ref={dropdownRef} className={`dropdown-container ${className}`}>
+      <Comp
+        ref={buttonRef}
+        id={dropdownId}
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={listboxId}
+        aria-activedescendant={
+          isOpen ? `${listboxId}-${activeIndex}` : undefined
+        }
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!disabled) {
+            setIsOpen(!isOpen);
+          }
+        }}
+        onKeyDown={handleButtonKeyDown}
+        aria-disabled={disabled}
+      >
+        {search ? (
           <Input
-            ref={triggerRef}
-            placeholder={selectedValue.label}
-            className={clsx("select--trigger-input", {
-              "select--trigger-placeholder": selectedValue.label,
-            })}
-            // value={inputvalue}
-            disabled={props.disabled}
-            onMouseDown={(e) => !props.search && e.preventDefault()}
+            value={inputValue}
+            placeholder={selectedLabel ?? "Search"}
             onChange={(e) => {
-              // setInputValue(e.target.value);
-              if (props.onSearch) {
-                props.onSearch(e.target.value);
-              } else {
-                setOptions([
-                  ...propOptions?.filter((v) =>
-                    v.label.includes(e.target.value)
-                  ),
-                ]);
-              }
+              setInputValue(e.target.value);
             }}
             onBlur={() => {
-              setInputValue(selectedValue.label);
-              setOptions(propOptions);
+              setInputValue("");
             }}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-                dropdownRef.current?.focus();
-                dropdownRef.current?.scrollTo({ top: 0 });
-              }
-            }}
+            className={clsx("dropdown-input", {
+              "dropdown-input-active": selectedLabel && !isOpen,
+            })}
           />
-        </div>
-        <div
-          className={clsx(
-            `select--menu`,
-            props.classes?.popup,
-            `select--menu-${dropdownPosition}`,
-            {
-              open: isOpen,
-            }
+        ) : (
+          <Button className={`dropdown-button`} disabled={disabled}>
+            {selectedLabel}
+          </Button>
+        )}
+      </Comp>
+      <ul
+        id={listboxId}
+        ref={listboxRef}
+        role="listbox"
+        aria-labelledby={dropdownId}
+        className={clsx(`dropdown-list`, { open: isOpen })}
+        tabIndex={-1}
+      >
+        {isOpen &&
+          createPortal(
+            <>
+              {internalOptions.filter((e) => e.label.includes(inputValue))
+                .length === 0 ? (
+                <li className={`dropdown-no-options`}>{renderNoOptions()}</li>
+              ) : (
+                internalOptions
+                  .filter((e) => e.label.includes(inputValue))
+                  .map((option, index) => (
+                    <Button
+                      variant={
+                        internalValue === option.value ? "primary" : "default"
+                      }
+                      key={index}
+                      disabled={option.disabled}
+                      asChild
+                    >
+                      <li
+                        id={`${listboxId}-${index}`}
+                        role="option"
+                        aria-selected={currentValue === option.value}
+                        className={`dropdown-option ${
+                          activeIndex === index ? "active" : ""
+                        } ${currentValue === option.value ? "selected" : ""}`}
+                        onClick={(e: MouseEvent<HTMLLIElement>) => {
+                          e.stopPropagation();
+                          handleSelection(option.value);
+                        }}
+                        onMouseEnter={() => setActiveIndex(index)}
+                      >
+                        {option.label}
+                      </li>
+                    </Button>
+                  ))
+              )}
+            </>,
+            document.querySelector(".dropdown-list")!
           )}
-          ref={dropdownRef}
-          onKeyDown={handleKeyDown}
-          onBlur={() => setCurrentIndex(0)}
-        >
-          {options.length < 1 ? (
-            <span className="select--options-container">
-              <FolderIcon className="select--options-container-placeholder" />
-              <p>No Data</p>
-            </span>
-          ) : (
-            <ul tabIndex={0} role="listbox" className="select--menu-list">
-              {options?.map((option, index) => (
-                <SelectItem
-                  option={option}
-                  key={index}
-                  handleSelect={handleSelect}
-                  selected={option.value === selectedValue.value}
-                  focused={index === currentIndex}
-                />
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    );
-  }
-);
-
-export const SelectItem = ({
-  option,
-  selected,
-  handleSelect,
-  focused,
-}: {
-  option: ISelectOptionProps;
-  selected: boolean;
-  handleSelect: (item: ISelectOptionProps) => void;
-  focused: boolean;
-}) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (focused) ref.current?.focus();
-    else ref.current?.blur();
-  }, [focused]);
-  return (
-    <Button
-      onClick={() => {
-        if (!option.disabled) handleSelect(option);
-      }}
-      asChild
-      ref={ref}
-      onMouseEnter={() => {
-        ref.current?.focus();
-      }}
-      onMouseLeave={() => {
-        ref.current?.blur();
-      }}
-      variant={selected ? "primary" : "text"}
-      theme="#2d2c2c"
-      className={clsx("select--menu-button", {
-        // "select--menu-button-active": index === currentIndex,
-      })}
-      size="large"
-      disabled={option.disabled}
-      role="option"
-      aria-selected={selected}
-      // aria-current={index === currentIndex}
-    >
-      <li tabIndex={1} className={itemVariation({ disabled: option.disabled })}>
-        {option.label}
-      </li>
-    </Button>
+      </ul>
+    </div>
   );
 };
-
-Select.displayName = "Select";

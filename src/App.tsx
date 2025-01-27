@@ -72,7 +72,7 @@ function App() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Select
+      {/* <Select
         options={[
           { label: "label", value: "value" },
           { label: "option", value: "option" },
@@ -94,7 +94,7 @@ function App() {
           { label: "optionj", value: "optionj" },
         ]}
         search
-      />
+      /> */}
       <h1>Vite + React</h1>
       <Accordion items={items} />
       <Label htmlFor="label">Label</Label>
@@ -152,7 +152,7 @@ function App() {
         <Radio value={"2"} children="single radio" />
         <Select
           options={[
-            { label: "label", value: "value", disabled: true },
+            { label: "label", value: "value" },
             { label: "option", value: "option" },
             { label: "option1", value: "option1" },
             { label: "option2", value: "option2" },

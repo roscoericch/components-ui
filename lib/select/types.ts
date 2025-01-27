@@ -1,17 +1,20 @@
-export interface ISelectProps {
-  options: ISelectOptionProps[];
-  value: string;
-  onSelect: (value: any) => void;
-  search: boolean;
-  placeholder: string;
-  disabled: boolean;
-  classes: { trigger: string; popup: string };
-  onSearch: (value: any) => void;
-  position: "top" | "bottom";
+import React from "react";
+
+export interface ISelectProps<T> {
+  options: ISelectOptionProps<T>[];
+  value?: T;
+  onChange?: (value: T) => void;
+  search?: boolean;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  onSearch?: (value: T) => void;
+  position?: "top" | "bottom";
+  renderNoOptions?: () => React.ReactNode; // Render when no options are available
 }
 
-export interface ISelectOptionProps {
-  value: string;
+export interface ISelectOptionProps<T> {
+  value: T;
   label: string;
   disabled?: boolean;
 }

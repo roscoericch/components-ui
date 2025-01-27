@@ -1,0 +1,106 @@
+.select--container {
+  position: relative;
+  display: inline-block;
+}
+
+.select--menu {
+  position: absolute;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  max-height: 300px;
+  /* min-height: 100px; */
+  overflow-y: scroll;
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.1);
+  transform-origin: top;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  border-radius: 6px;
+}
+
+.select--menu.select--menu-top {
+  bottom: 110%;
+}
+
+.select--menu.select--menu-bottom {
+  top: 110%;
+}
+
+.select--menu.open {
+  opacity: 1;
+  scale: 1;
+  transform: scale(1);
+}
+
+.select--menu ul {
+  list-style-type: none;
+  padding: 4px 2px;
+  margin: 0;
+  border-radius: 6px;
+  border: 1px;
+  border-color: transparent;
+}
+
+.select--menu li {
+  padding: 12px;
+  width: 100%;
+  border-color: transparent;
+}
+
+.select--menu li:hover {
+  /* background-color: #f1f1f1; */
+}
+
+/* .select--menu.open:focus-visible .select--menu-button {
+  cursor: none;
+} */
+
+.select--menu-button {
+  text-align: center;
+  justify-content: flex-start;
+  font-size: 12px;
+}
+
+.select--menu-button:focus-visible {
+  background-color: var(--color-inactive);
+}
+
+.select--menu-button[aria-current="true"] {
+  background-color: var(--color-inactive);
+}
+
+.select--menu-button.select--menu-button-active {
+  background-color: var(--color-inactive);
+}
+
+.select--menu .select--item-disabled {
+  color: "#ccc";
+}
+
+.select--trigger .select--trigger-input {
+  cursor: pointer;
+}
+
+..select--trigger-placeholder::placeholder {
+  color: black;
+}
+
+.select--options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  color: #ccc;
+  font-size: 14px;
+  padding: 2%;
+}
+
+.select--options-placeholder {
+  width: 10px;
+  height: 10px;
+  stroke: #ccc;
+  display: inline-block;
+}
