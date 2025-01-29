@@ -49,24 +49,32 @@ export const Modal: React.FC<ModalProps> = (props) => {
       closeDialog();
     }
   }, [props.open]);
-  return createPortal(
-    <dialog
-      className={modalvariants({ centered: props.centered, open: props.open })}
-      onClick={handleBackdropClick}
-      ref={dialogRef}
-    >
-      {props.closeable && (
-        <Button
-          theme="#000"
-          variant="text"
-          size="icon"
-          className="button"
-          onClick={closeDialog}
-          icon={<CancelIcon className="cancel--icon" fill="#1c1b1b" />}
-        />
-      )}
-      {props.children}
-    </dialog>,
-    document.body
+  return (
+    <>
+      {props.open &&
+        createPortal(
+          <dialog
+            className={modalvariants({
+              centered: props.centered,
+              open: props.open,
+            })}
+            onClick={handleBackdropClick}
+            ref={dialogRef}
+          >
+            {props.closeable && (
+              <Button
+                theme="#000"
+                variant="text"
+                size="icon"
+                className="button"
+                onClick={closeDialog}
+                icon={<CancelIcon className="cancel--icon" fill="#1c1b1b" />}
+              />
+            )}
+            {props.children}
+          </dialog>,
+          document.body
+        )}
+    </>
   );
 };
