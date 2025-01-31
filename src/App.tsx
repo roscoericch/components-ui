@@ -169,11 +169,11 @@ function App() {
             { label: "options", value: "options" },
             { label: "optiond", value: "optiond" },
             { label: "optionf", value: "optionf" },
-            { label: "optiong", value: "optiong" },
+            { label: "optiong", value: "optiong", disabled: true },
             { label: "optionh", value: "optionh" },
-            { label: "optionj", value: "optionj" },
+            { label: "optionj", value: "optionj", disabled: true },
           ]}
-          search
+          // search
         />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR

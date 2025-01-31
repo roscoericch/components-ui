@@ -1,28 +1,10 @@
 import "./select.css";
-import {
-  useState,
-  useRef,
-  useEffect,
-  useId,
-  type KeyboardEvent,
-  type MouseEvent,
-} from "react";
+import { useState, useRef, useEffect, useId, type KeyboardEvent } from "react";
 import { Button, Input } from "component-ui";
 import clsx from "clsx";
 import { createPortal } from "react-dom";
 import Comp from "../shared/Comp";
 import { ISelectProps } from "./types";
-
-// interface AccessibleDropdownProps<T> {
-//   options: Array<Option<T>>;
-//   value?: T;
-//   onChange?: (value: T) => void;
-//   placeholder?: string;
-//   className?: string;
-//   disabled?: boolean;
-//   renderNoOptions?: () => ReactNode;
-//   search?: boolean;
-// }
 
 export const Select = <T,>({
   options,
@@ -128,7 +110,12 @@ export const Select = <T,>({
       case "Enter":
       case " ": {
         e.preventDefault();
-        if (isOpen && activeIndex >= 0 && options[activeIndex]) {
+        if (
+          isOpen &&
+          activeIndex >= 0 &&
+          options[activeIndex] &&
+          !options[activeIndex].disabled
+        ) {
           handleSelection(options[activeIndex].value);
         }
         setIsOpen(!isOpen);
@@ -196,6 +183,7 @@ export const Select = <T,>({
             className={clsx("dropdown-input", {
               "dropdown-input-active": selectedLabel && !isOpen,
             })}
+            disabled={disabled}
           />
         ) : (
           <Button className={`dropdown-button`} disabled={disabled}>
@@ -229,6 +217,10 @@ export const Select = <T,>({
                       }
                       key={index}
                       disabled={option.disabled}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!option.disabled) handleSelection(option.value);
+                      }}
                       asChild
                     >
                       <li
@@ -238,10 +230,6 @@ export const Select = <T,>({
                         className={`dropdown-option ${
                           activeIndex === index ? "active" : ""
                         } ${currentValue === option.value ? "selected" : ""}`}
-                        onClick={(e: MouseEvent<HTMLLIElement>) => {
-                          e.stopPropagation();
-                          handleSelection(option.value);
-                        }}
                         onMouseEnter={() => setActiveIndex(index)}
                       >
                         {option.label}

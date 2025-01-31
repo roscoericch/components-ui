@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+#irrelevant client test(react)
+src
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
