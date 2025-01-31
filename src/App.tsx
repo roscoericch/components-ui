@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import "./App.css";
 import {
@@ -14,6 +15,7 @@ import {
 import User from "../lib/assets/icons/User";
 import { itemProps } from "../lib/dropdown/types";
 import { RadioGroup } from "../lib/radio/Radio";
+import { css } from "@emotion/react";
 
 const items = [
   {
@@ -111,7 +113,7 @@ function App() {
       <div className="card">
         <Button
           variant="text"
-          theme="#df0909"
+          theme="#4aef1c"
           // ghost
           onClick={() => setOpen(true)}
           // disabled
@@ -176,6 +178,15 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <div
+          css={css({
+            margin: 10,
+            padding: 10,
+            backgroundColor: "#eee",
+          })}
+        >
+          Hover to change color.
+        </div>
       </div>
     </>
   );

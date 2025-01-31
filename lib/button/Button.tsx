@@ -1,6 +1,8 @@
+/** @jsxImportSource @emotion/react */
 import React, { cloneElement, forwardRef } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
+import { css } from "@emotion/react";
 
 import "./button.css";
 import { colorVariation } from "../utils/theme";
@@ -75,7 +77,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         props.destructive ? "#ff4d4f" : props.theme,
         1
       ),
-    } as React.CSSProperties;
+    };
     const Component = props.asChild ? Comp : "button";
 
     const content = (
@@ -138,7 +140,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           }),
           props.className
         )}
-        style={style}
+        css={css({ ...style })}
         ref={forwardedRef}
       >
         {content}

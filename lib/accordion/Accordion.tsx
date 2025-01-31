@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import "./accordion.css";
+import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import ArrowRightIcon from "../assets/icons/ArrowRightIcon";
