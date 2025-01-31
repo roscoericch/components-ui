@@ -50,9 +50,18 @@
   z-index: 1000;
   opacity: 0;
   transform: scale(0.1);
-  transform-origin: top;
   transition: opacity 0.3s ease, transform 0.3s ease;
   border-radius: 6px;
+}
+
+.dropdown-list.dropdown-list-top {
+  bottom: 110%;
+  transform-origin: bottom;
+}
+
+.dropdown-list.dropdown-list-bottom {
+  top: 110%;
+  transform-origin: top;
 }
 
 .dropdown-list.open {
