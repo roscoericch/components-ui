@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
@@ -5,6 +6,7 @@ import "./input.css";
 import { colorVariation } from "../utils/theme";
 import HideIcon from "../assets/icons/HideIcon";
 import ShowIcon from "../assets/icons/ShowIcon";
+import { css } from "@emotion/react";
 export interface InputProps
   extends Omit<
     React.DetailedHTMLProps<
@@ -50,12 +52,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [`--input-theme`]: colorVariation(theme),
       [`--input-theme-light`]: colorVariation(theme, 0.6),
       [`--input-theme-light-fade`]: colorVariation(theme, 0.3),
-    } as React.CSSProperties;
+    };
     return (
       <>
         {prefix || suffix ? (
           <span
-            style={{ ...style }}
+            css={css({ ...style })}
             className={clsx(
               "input--container",
               inputVariants({ variant, size }),
@@ -81,7 +83,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
             ref={ref}
             className={clsx(inputVariants({ variant, size }), props.className)}
-            style={{ ...style, ...props.style }}
+            css={css({ ...style })}
           />
         )}
       </>
