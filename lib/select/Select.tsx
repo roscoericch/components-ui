@@ -33,12 +33,15 @@ export const Select = <T,>({
   disabled = false,
   renderNoOptions = () => "No options available",
   search = false,
+  position = "bottom",
 }: ISelectProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [internalValue, setInternalValue] = useState<T | null>(value ?? null);
   const [inputValue, setInputValue] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [internalOptions, setInternalOptions] = useState(options);
+  const [dropdownPosition, setDropdownPosition] =
+    useState<ISelectProps<T>["position"]>(position);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
@@ -77,6 +80,30 @@ export const Select = <T,>({
       activeOption?.scrollIntoView({ block: "nearest" });
     }
   }, [activeIndex, isOpen]);
+
+  const updateDropdownPosition = () => {
+    if (!buttonRef.current || !listboxRef.current) return;
+
+    const triggerRect = buttonRef.current.getBoundingClientRect();
+    const dropdownHeight = listboxRef.current.offsetHeight + 10;
+
+    const spaceBelow = window.innerHeight - triggerRect.bottom;
+
+    // Choose position based on available space
+    setDropdownPosition(spaceBelow >= dropdownHeight ? "bottom" : "top");
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      updateDropdownPosition();
+      window.addEventListener("resize", updateDropdownPosition);
+      window.addEventListener("scroll", updateDropdownPosition);
+    }
+    return () => {
+      window.removeEventListener("resize", updateDropdownPosition);
+      window.removeEventListener("scroll", updateDropdownPosition);
+    };
+  }, [isOpen]);
 
   const handleButtonKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return;
@@ -181,7 +208,9 @@ export const Select = <T,>({
         ref={listboxRef}
         role="listbox"
         aria-labelledby={dropdownId}
-        className={clsx(`dropdown-list`, { open: isOpen })}
+        className={clsx(`dropdown-list`, `dropdown-list-${dropdownPosition}`, {
+          open: isOpen,
+        })}
         tabIndex={-1}
       >
         {isOpen &&
