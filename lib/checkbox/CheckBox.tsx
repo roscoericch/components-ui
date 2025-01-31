@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { Label } from "component-ui";
 import React, { useId } from "react";
 import { CheckBoxProps } from "./types";
@@ -6,6 +7,7 @@ import clsx from "clsx";
 import { cva } from "class-variance-authority";
 import CheckIcon from "../assets/icons/CheckIcon";
 import { colorVariation } from "../utils/theme";
+import { css } from "@emotion/react";
 
 const checkBoxVariant = cva("component-ui-style custom--checkbox", {
   variants: {
@@ -25,12 +27,12 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckBoxProps>(
       [`--checkbox-color-light`]: colorVariation(props.theme, 0.6),
       [`--checkbox-color-light-fade`]: colorVariation(props.theme, 0.3),
       [`--checkbox-color-dark`]: colorVariation(props.theme, 1),
-    } as React.CSSProperties;
+    };
     return (
       <Label
         htmlFor={props.id ?? id}
         className={checkBoxVariant({ disabled: props.disabled })}
-        style={style}
+        css={css({ ...style })}
       >
         <input
           {...props}
