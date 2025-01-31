@@ -59,7 +59,21 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ iconPosition = "left", theme, variant, ...props }, forwardedRef) => {
+  (
+    {
+      iconPosition = "left",
+      theme,
+      variant,
+      ghost,
+      disabled,
+      loading,
+      size = "small",
+      spinProps,
+      icon,
+      ...props
+    },
+    forwardedRef
+  ) => {
     const style = {
       [`--button-${variant}-color`]: colorVariation(
         props.destructive ? "#ff4d4f" : theme,
@@ -83,21 +97,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const content = (
       <>
         {/* Predefined Children */}
-        {props.loading && (
+        {loading && (
           <Spin
-            {...props.spinProps}
+            {...spinProps}
             color={
-              props.disabled
-                ? "rgba(0, 0, 0, 0.25)"
-                : props.spinProps?.color ?? "#FFF"
+              disabled ? "rgba(0, 0, 0, 0.25)" : spinProps?.color ?? "#FFF"
             }
           />
         )}
-        {iconPosition === "left" && props.icon}
+        {iconPosition === "left" && icon}
         {props.asChild
           ? extractElementsFromNode(props.children)
           : props.children}
-        {iconPosition === "right" && props.icon}
+        {iconPosition === "right" && icon}
       </>
     );
 
@@ -111,10 +123,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className: clsx(
               buttonVariants({
                 variant,
-                size: props.size,
-                ghost: props.ghost,
-                loading: props.loading,
-                disabled: props.disabled,
+                size: size,
+                ghost: ghost,
+                loading: loading,
+                disabled: disabled,
               }),
               props.children.props.className,
               props.className
@@ -133,15 +145,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={clsx(
           buttonVariants({
             variant,
-            size: props.size,
-            ghost: props.ghost,
-            loading: props.loading,
-            disabled: props.disabled,
+            size,
+            ghost,
+            loading,
+            disabled,
           }),
           props.className
         )}
         css={css({ ...style })}
         ref={forwardedRef}
+        aria-disabled={disabled}
       >
         {content}
       </Component>
