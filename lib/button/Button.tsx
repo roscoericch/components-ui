@@ -59,22 +59,22 @@ const extractElementsFromNode = (node: React.ReactNode) => {
 
 /** Primary UI component for user interaction */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ iconPosition = "left", ...props }, forwardedRef) => {
+  ({ iconPosition = "left", theme, variant, ...props }, forwardedRef) => {
     const style = {
-      [`--button-${props.variant}-color`]: colorVariation(
-        props.destructive ? "#ff4d4f" : props.theme,
+      [`--button-${variant}-color`]: colorVariation(
+        props.destructive ? "#ff4d4f" : theme,
         0.9
       ),
-      [`--button-${props.variant}-color-light`]: colorVariation(
-        props.destructive ? "#ff4d4f" : props.theme,
+      [`--button-${variant}-color-light`]: colorVariation(
+        props.destructive ? "#ff4d4f" : theme,
         0.6
       ),
-      [`--button-${props.variant}-color-light-fade`]: colorVariation(
-        props.destructive ? "#ff4d4f" : props.theme,
+      [`--button-${variant}-color-light-fade`]: colorVariation(
+        props.destructive ? "#ff4d4f" : theme,
         0.3
       ),
-      [`--button-${props.variant}-color-dark`]: colorVariation(
-        props.destructive ? "#ff4d4f" : props.theme,
+      [`--button-${variant}-color-dark`]: colorVariation(
+        props.destructive ? "#ff4d4f" : theme,
         1
       ),
     };
@@ -110,7 +110,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             ...props,
             className: clsx(
               buttonVariants({
-                variant: props.variant,
+                variant,
                 size: props.size,
                 ghost: props.ghost,
                 loading: props.loading,
@@ -132,7 +132,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
         className={clsx(
           buttonVariants({
-            variant: props.variant,
+            variant,
             size: props.size,
             ghost: props.ghost,
             loading: props.loading,

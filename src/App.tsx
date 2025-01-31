@@ -128,7 +128,7 @@ function App() {
         <Dropdown trigger={["click"]} options={dropdown_items}>
           <Button
             variant="primary"
-            theme="#df0909"
+            theme="#ede618"
             onClick={() => setCount((count) => count + 1)}
             // loading={true}
           >
