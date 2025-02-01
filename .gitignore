@@ -15,6 +15,7 @@ dist-ssr
 #irrelevant client test(react)
 /src/*
 /public/*
+index.html
 
 # Editor directories and files
 .vscode/*
