@@ -244,3 +244,7 @@ export const Select = <T,>({
     </div>
   );
 };
+
+export const AutoComplete = <T,>(props: ISelectProps<T>) => {
+  return <Select {...props} search />;
+};
