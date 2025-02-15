@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-import { Input } from "./Input";
+import Input from "./Input";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -44,5 +44,14 @@ export const Large: Story = {
 export const Small: Story = {
   args: {
     size: "small",
+  },
+};
+
+export const PasswordV: Story = {
+  render: (args) => <Input.Password {...args} />,
+  args: {
+    size: "small",
+    type: "password",
+    placeholder: "Password",
   },
 };

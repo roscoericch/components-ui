@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import "./input.css";
@@ -20,6 +20,11 @@ export interface InputProps
   theme?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+}
+
+export interface PasswordInputProps extends InputProps {
+  showPassword?: boolean;
+  onVisibleToggle?: (value: boolean) => void;
 }
 
 const inputVariants = cva("input component-ui-style", {
@@ -91,9 +96,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-export const Password = React.forwardRef<HTMLInputElement, InputProps>(
-  (props, ref) => {
+export const Password = React.forwardRef<HTMLInputElement, PasswordInputProps>(
+  ({ showPassword, onVisibleToggle, ...props }, ref) => {
     const [show, setShow] = useState(false);
+    const isControlled = showPassword !== undefined;
+    useEffect(() => {
+      if (isControlled) {
+        setShow(showPassword);
+      }
+    }, [isControlled, showPassword]);
     return (
       <Input
         {...props}
@@ -105,6 +116,7 @@ export const Password = React.forwardRef<HTMLInputElement, InputProps>(
               onClick={() => {
                 if (props.disabled) return;
                 setShow(false);
+                onVisibleToggle?.(false);
               }}
               stroke={props.disabled ? "#3f3c3c" : "#000"}
             />
@@ -115,6 +127,7 @@ export const Password = React.forwardRef<HTMLInputElement, InputProps>(
               onClick={() => {
                 if (props.disabled) return;
                 setShow(true);
+                onVisibleToggle?.(true);
               }}
               stroke={props.disabled ? "#3f3c3c" : "#000"}
             />
@@ -126,6 +139,11 @@ export const Password = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+
 Input.displayName = "Input";
-Password.displayName = "Password";
-// export { Input, Password };
+Password.displayName = "Input.Password";
+
+type InputComponent = typeof Input & { Password: typeof Password };
+const ComponentInput = Input as InputComponent;
+ComponentInput.Password = Password;
+export default ComponentInput;
